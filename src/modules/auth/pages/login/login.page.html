@@ -1,0 +1,18 @@
+<ion-content padding>
+  <div class="auth-img-container">
+    <img src="" alt="">
+  </div>
+  <form [formGroup]="authForm" (submir)="login()" novalidate>
+    <ion-item>
+      <ion-icon name="contact" item-left></ion-icon>
+      <ion-input placeholder="Usuario" type="text" formControlName="user"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="lock" item-left></ion-icon>
+      <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div class="auth-button-container" text-center margin-top>
+      <button ion-button type="submit" color="light">Ingresar</button>
+    </div>
+  </form>
+</ion-content>
