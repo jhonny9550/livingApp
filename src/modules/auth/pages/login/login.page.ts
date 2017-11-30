@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage } from "ionic-angular";
+import { IonicPage, NavController } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 @IonicPage()
@@ -13,7 +13,8 @@ export class LoginPage {
   authForm: FormGroup
 
   constructor(
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -24,7 +25,8 @@ export class LoginPage {
   }
 
   login() {
-    
+    console.log('Do login');
+    this.navCtrl.setRoot('WaiterTabsPage');
   }
 
 }

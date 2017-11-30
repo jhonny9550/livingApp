@@ -2,7 +2,7 @@
   <div class="auth-img-container">
     <img src="" alt="">
   </div>
-  <form [formGroup]="authForm" (submir)="login()" novalidate>
+  <form [formGroup]="authForm" (submit)="login()" novalidate>
     <ion-item>
       <ion-icon name="contact" item-left></ion-icon>
       <ion-input placeholder="Usuario" type="text" formControlName="user"></ion-input>
