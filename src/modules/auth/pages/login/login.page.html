@@ -11,9 +11,9 @@
       <ion-icon name="lock" item-left></ion-icon>
       <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
     </ion-item>
-    <div class="auth-button-container" text-center margin-top>
-      <button ion-button type="submit" color="light" *ngIf="!(user$ | async).loading">Ingresar</button>
-      <ion-spinner name="crescent" color="primary" *ngIf="(user$ | async).loading"></ion-spinner>
+    <div class="auth-button-container" text-center margin-top *ngIf="user$ | async as user">
+      <button ion-button type="submit" color="light" *ngIf="!user.loading">Ingresar</button>
+      <ion-spinner name="crescent" color="primary" *ngIf="user.loading"></ion-spinner>
     </div>
   </form>
 </ion-content>

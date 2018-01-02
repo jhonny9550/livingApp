@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
+import { AngularFireDatabase } from "angularfire2/database";
 
 @Injectable()
 export class AuthProvider {
 
   constructor(
-    public afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private afDatabase: AngularFireDatabase
   ) { }
 
   login(email: string, password: string) {
@@ -14,6 +16,14 @@ export class AuthProvider {
 
   logout() {
     return this.afAuth.auth.signOut();
+  }
+
+  fetchUserData(uid: string) {
+    return this.afDatabase.object(`/users/${uid}`).query.once('value')
+      .then(snap => {
+        if (snap.val()) return snap.val();
+        else throw 'Datos de usuario no encontrados';
+      });
   }
 
   parseErrorCode(error: { code: string, message: string }) {

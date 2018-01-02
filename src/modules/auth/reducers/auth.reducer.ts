@@ -4,7 +4,7 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 export type Action = authActions.All;
 
-export const initialState: IUser = new User(null, null, 'GUEST', false);
+export const initialState: IUser = new User(null, null, 'GUEST', null, false);
 
 export function reducer(state: IUser = initialState, action: Action) {
   switch (action.type) {

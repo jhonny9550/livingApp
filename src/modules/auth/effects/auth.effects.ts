@@ -16,7 +16,8 @@ import "rxjs/add/observable/empty";
 import * as userActions from '../actions/auth.actions';
 import * as fromAuth from '../reducers/auth.reducer';
 import { AuthProvider } from "../providers/auth.provider";
-import { ToastController } from "ionic-angular";
+import { ToastController, App } from "ionic-angular";
+import { IUser } from "../models/user.model";
 
 @Injectable()
 export class AuthEffects {
@@ -30,7 +31,7 @@ export class AuthEffects {
       return this.auth.login(payload.email, payload.password)
         .then(res => {
           console.log('Response: ', res);
-          return new userActions.Authenticated({...res});
+          return new userActions.GetUserData({ uid: res.uid });
         })
         .catch(error => {
           const msg = this.auth.parseErrorCode(error);
@@ -40,10 +41,61 @@ export class AuthEffects {
     });
 
   @Effect()
+  getUserData$: Observable<Action> = this.actions
+    .ofType(userActions.GET_USER_DATA)
+    .map(toPayload)
+    .switchMap((payload: { uid: string }) => {
+      return this.auth.fetchUserData(payload.uid)
+        .then(user => new userActions.GetUserDataSuccess({ ...user }))
+        .catch(error => new userActions.GetUserDataFailed({ error }));
+    });
+  
+  @Effect()
+  getUserDataSuccess$: Observable<Action> = this.actions
+    .ofType(userActions.GET_USER_DATA_SUCCESS)
+    .map(toPayload)
+    .map((payload: IUser) => {
+      switch (payload.role) {
+        case 'barman': {
+          // this.appCtrl.getActiveNav().setRoot('');
+          console.log('Nav to barman page');
+        };
+        case 'cashier': {
+          // this.appCtrl.getActiveNav().setRoot('');
+          console.log('Nav to cashier page');
+        };
+        case 'waiter': {
+          this.appCtrl.getActiveNav().setRoot('WaiterTabsPage');
+        };
+        default: {
+          this.toastCtrl.create({
+            duration: 4000,
+            message: 'Bienvenido ' + payload.displayName,
+            position: 'bottom',
+            closeButtonText: 'Ok',
+            showCloseButton: true
+          }).present();
+          return new userActions.Authenticated({ ...payload });
+        }  
+      }
+    });
+  
+  @Effect()
+  getUserDataFailed: Observable<Action> = this.actions
+    .ofType(userActions.GEST_USER_DATA_FAILED)
+    .map(toPayload)
+    .map((payload: { error: any }) => {
+      console.log('Fetch data error: ', payload.error);
+      this.auth.logout();
+      const msg = payload.error || 'Server error';
+      return new userActions.AuthError({ msg });
+    });
+
+  @Effect()
   authError$: Observable<Action> = this.actions
     .ofType(userActions.AUTH_ERROR)
     .map(toPayload)
-    .switchMap((payload: { error?: any, msg: string }) => {
+    .map((payload: { error?: any, msg: string }) => {
       this.toastCtrl.create({
         message: payload.msg,
         duration: 4000,
@@ -51,12 +103,13 @@ export class AuthEffects {
         closeButtonText: 'Ok',
         showCloseButton: true
       }).present();
-      return [];
+      return new userActions.NotAuthenticated();
     })
 
   constructor(
-    public actions: Actions,
-    public auth: AuthProvider,
-    public toastCtrl: ToastController
+    private actions: Actions,
+    private auth: AuthProvider,
+    private toastCtrl: ToastController,
+    private appCtrl: App
   ) { }
 }
