@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 import { MyApp } from './app.component';
 import { MODULES } from "../modules/index";
 
@@ -14,6 +16,7 @@ import { MODULES } from "../modules/index";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    StoreDevtoolsModule.instrument({ maxAge: 25 }),
     ...MODULES
   ],
   bootstrap: [IonicApp],
