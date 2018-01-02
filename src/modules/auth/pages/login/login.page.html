@@ -12,9 +12,8 @@
       <ion-input placeholder="Contraseña" type="password" formControlName="password"></ion-input>
     </ion-item>
     <div class="auth-button-container" text-center margin-top>
-      {{ user$ | async | json }}
-      <button ion-button type="submit" color="light">Ingresar</button>
-      <!-- <ion-spinner name="crescent" color="primary" *ngIf="(user$ | async).loading"></ion-spinner> -->
+      <button ion-button type="submit" color="light" *ngIf="!(user$ | async).loading">Ingresar</button>
+      <ion-spinner name="crescent" color="primary" *ngIf="(user$ | async).loading"></ion-spinner>
     </div>
   </form>
 </ion-content>

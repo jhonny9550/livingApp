@@ -21,7 +21,7 @@ export function reducer(state: IUser = initialState, action: Action) {
       return { ...state, ...initialState, loading: false };
     }  
     case authActions.AUTH_ERROR: {
-      return { ...state, error: action.payload.error };
+      return { ...state, error: action.payload.error, loading: false };
     }  
     default:
       return state;

@@ -11,7 +11,7 @@ import { EFFECTS } from "./effects/index";
   imports: [
     IonicModule,
     StoreModule.forFeature('userModule', { user: reducer }),
-    EffectsModule.forFeature(EFFECTS)
+    EffectsModule.forFeature(EFFECTS),
   ],
   exports: [...COMPONENTS],
   declarations: [...COMPONENTS],
