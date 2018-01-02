@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { IUser } from '../../models/user.model';
+import { Observable } from "rxjs/Rx";
+import * as fromAuth from '../../reducers/auth.reducer';
 
 @IonicPage()
 @Component({
@@ -10,11 +14,13 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 export class LoginPage {
 
-  authForm: FormGroup
+  authForm: FormGroup;
+  user$: Observable<IUser>;
 
   constructor(
     public formBuilder: FormBuilder,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public store: Store<IUser>
   ) { }
 
   ngOnInit() {
@@ -22,6 +28,7 @@ export class LoginPage {
       user: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.user$ = this.store.select(fromAuth.getUser);
   }
 
   login() {
