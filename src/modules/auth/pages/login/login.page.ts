@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Store } from "@ngrx/store";
 import { IUser } from '../../models/user.model';
 import { Observable } from "rxjs/Rx";
+import * as userActions from '../../actions/auth.actions';
 import * as fromAuth from '../../reducers/auth.reducer';
 
 @IonicPage()
@@ -25,15 +26,18 @@ export class LoginPage {
 
   ngOnInit() {
     this.authForm = this.formBuilder.group({
-      user: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required]
     });
     this.user$ = this.store.select(fromAuth.getUser);
   }
 
   login() {
-    console.log('Do login');
-    this.navCtrl.setRoot('WaiterTabsPage');
+    console.log('Do login, values: ', this.authForm.value);
+    const email = this.authForm.get('email').value;
+    const password = this.authForm.get('password').value;
+    this.store.dispatch(new userActions.Login({ email, password }))
+    // this.navCtrl.setRoot('WaiterTabsPage');
   }
 
 }

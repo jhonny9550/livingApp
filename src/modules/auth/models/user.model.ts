@@ -11,5 +11,10 @@ export interface IUser {
 }
 
 export class User {
-  constructor(public uid: string, public email: string, public displayName: string) { }
+  constructor(
+    public uid: string, 
+    public email: string, 
+    public displayName: string,
+    public loading?: boolean,
+  ) { }
 }
