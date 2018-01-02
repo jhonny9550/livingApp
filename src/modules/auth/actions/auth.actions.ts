@@ -4,9 +4,11 @@ import { IUser } from "../models/user.model";
 export const LOGIN = '[auth] login';
 export const LOGOUT = '[auth] logout';
 
+export const VERIFY_USER = '[auth] verify user';
+
 export const GET_USER_DATA = '[auth] get user data';
 export const GET_USER_DATA_SUCCESS = '[auth] get user data success';
-export const GEST_USER_DATA_FAILED = '[auth] get user data failed';
+export const GET_USER_DATA_FAILED = '[auth] get user data failed';
 
 export const AUTHENTICATED = '[auth] authenticated';
 export const NOT_AUTHENTICATED = '[auth] not authenticated';
@@ -23,6 +25,11 @@ export class Logout implements Action {
   constructor() { }
 }
 
+export class VerifyUser implements Action {
+  readonly type = VERIFY_USER;
+  constructor() { }
+}
+
 export class GetUserData implements Action {
   readonly type = GET_USER_DATA;
   constructor(public payload: { uid: string }) { }
@@ -30,11 +37,11 @@ export class GetUserData implements Action {
 
 export class GetUserDataSuccess implements Action {
   readonly type = GET_USER_DATA_SUCCESS;
-  constructor(public payload: { role: string }) { }
+  constructor(public payload: IUser) { }
 }
 
 export class GetUserDataFailed implements Action {
-  readonly type = GEST_USER_DATA_FAILED;
+  readonly type = GET_USER_DATA_FAILED;
   constructor(public payload: { error?: any }) { }
 }
 
@@ -56,6 +63,7 @@ export class AuthError implements Action {
 export type All
   = Login
   | Logout
+  | VerifyUser
   | GetUserData
   | GetUserDataSuccess
   | GetUserDataFailed

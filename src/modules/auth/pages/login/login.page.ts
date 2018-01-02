@@ -33,7 +33,6 @@ export class LoginPage {
   }
 
   login() {
-    console.log('Do login, values: ', this.authForm.value);
     const email = this.authForm.get('email').value;
     const password = this.authForm.get('password').value;
     this.store.dispatch(new userActions.Login({ email, password }))

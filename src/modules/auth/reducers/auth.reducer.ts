@@ -12,13 +12,13 @@ export function reducer(state: IUser = initialState, action: Action) {
       return { ...state, loading: true };
     }
     case authActions.LOGOUT: {
-      return initialState;
+      return { ...state, loading: true };
     }
     case authActions.AUTHENTICATED: {
       return { ...state, ...action.payload, loading: false };
     }
     case authActions.NOT_AUTHENTICATED: {
-      return { ...state, ...initialState, loading: false };
+      return { ...initialState, loading: false };
     }  
     case authActions.AUTH_ERROR: {
       return { ...state, error: action.payload.error, loading: false };

@@ -1,14 +1,19 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
+import { Observable } from "rxjs/Rx";
 
 @Injectable()
 export class AuthProvider {
 
+  user$: Observable<any>;
+
   constructor(
     private afAuth: AngularFireAuth,
     private afDatabase: AngularFireDatabase
-  ) { }
+  ) { 
+    this.user$ = this.afAuth.authState;
+  }
 
   login(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password);
@@ -26,7 +31,7 @@ export class AuthProvider {
       });
   }
 
-  parseErrorCode(error: { code: string, message: string }) {
+  parseErrorCode(error: { code: string, message: string }): string {
     switch (error.code) {
       case 'auth/wrong-password':
       case 'auth/invalid-email':

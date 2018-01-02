@@ -1,5 +1,11 @@
 <ion-header>
   <ion-navbar color="light">
+    <ion-buttons end *ngIf="user$ | async as user">
+      <button ion-button icon-only (click)="logout()" *ngIf="!user.loading">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+      <ion-spinner name="crescent" color="primary" *ngIf="user.loading"></ion-spinner>
+    </ion-buttons>
     <ion-title>
       Perfil
     </ion-title>
@@ -8,15 +14,14 @@
 
 <ion-content padding>
   <ion-card>
-    <ion-card-content>
+    <ion-card-content *ngIf="user$ | async as user">
       <ion-row>
         <ion-col>
           <img src="" alt="">
         </ion-col>
         <ion-col>
-          <h2>John Doe</h2>
-          <b>Mesero</b>
-          <p>23</p>
+          <h2>{{user.displayName}}</h2>
+          <b>{{user.role}}</b>
         </ion-col>
       </ion-row>
     </ion-card-content>
