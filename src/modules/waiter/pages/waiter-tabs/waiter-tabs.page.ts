@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage } from "ionic-angular";
+import { PAGES } from "../index";
 
 @IonicPage()
 @Component({
@@ -8,7 +9,12 @@ import { IonicPage } from "ionic-angular";
 })
 
 export class WaiterTabsPage {
+
+  tabPages = PAGES;
+
   constructor() { }
 
   ngOnInit() { }
+
+
 }
