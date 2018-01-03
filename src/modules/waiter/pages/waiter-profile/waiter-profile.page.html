@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="light">
+    <ion-buttons end *ngIf="user$ | async as user">
+      <button ion-button icon-only (click)="logout()" *ngIf="!user.loading">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+      <ion-spinner name="crescent" color="primary" *ngIf="user.loading"></ion-spinner>
+    </ion-buttons>
+    <ion-title>
+      Perfil
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content *ngIf="user$ | async as user">
+      <ion-row>
+        <ion-col text-center>
+          <img src="{{user.avatarUrl}}" style="border-radius: 50%; max-width: 50px;" class="center-element">
+        </ion-col>
+        <ion-col>
+          <h2>{{user.displayName}}</h2>
+          <b>{{user.role}}</b>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <button ion-item>Ventas del día</button>
+    <button ion-item>Ventas de la semana</button>
+    <button ion-item>Ventas del mes</button>
+  </ion-card>
+</ion-content>
