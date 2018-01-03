@@ -16,8 +16,8 @@
   <ion-card>
     <ion-card-content *ngIf="user$ | async as user">
       <ion-row>
-        <ion-col>
-          <img src="" alt="">
+        <ion-col text-center>
+          <img src="{{user.avatarUrl}}" style="border-radius: 50%; max-width: 50px;" class="center-element">
         </ion-col>
         <ion-col>
           <h2>{{user.displayName}}</h2>

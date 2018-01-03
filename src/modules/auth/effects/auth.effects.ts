@@ -50,7 +50,7 @@ export class AuthEffects {
     .switchMap(() => this.auth.user$)
     .take(1)
     .do(user => console.log('Local user data: ', user))
-    .map(user => user.uid ? new userActions.GetUserData({ uid: user.uid }) : new userActions.NotAuthenticated());
+    .map(user => user ? new userActions.GetUserData({ uid: user.uid }) : new userActions.NotAuthenticated());
 
   @Effect()
   getUserData$: Observable<Action> = this.actions

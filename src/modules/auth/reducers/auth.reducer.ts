@@ -4,7 +4,7 @@ import { createFeatureSelector, createSelector } from "@ngrx/store";
 
 export type Action = authActions.All;
 
-export const initialState: IUser = new User(null, null, 'GUEST', null, false);
+export const initialState: IUser = new User(null, null, null, null, false);
 
 export function reducer(state: IUser = initialState, action: Action) {
   switch (action.type) {
@@ -14,15 +14,21 @@ export function reducer(state: IUser = initialState, action: Action) {
     case authActions.LOGOUT: {
       return { ...state, loading: true };
     }
+    case authActions.VERIFY_USER: {
+      return { ...state, loading: true }
+    }
+    case authActions.GET_USER_DATA: {
+      return { ...state, loading: true }
+    }  
     case authActions.AUTHENTICATED: {
       return { ...state, ...action.payload, loading: false };
     }
     case authActions.NOT_AUTHENTICATED: {
       return { ...initialState, loading: false };
-    }  
+    }
     case authActions.AUTH_ERROR: {
       return { ...state, error: action.payload.error, loading: false };
-    }  
+    }
     default:
       return state;
   }

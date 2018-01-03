@@ -7,6 +7,7 @@ export interface IUser {
   email: string;
   displayName: string;
   role: string;
+  avatarUrl?: string;
   loading?: boolean;
   error?: any;
 }
