@@ -3,8 +3,11 @@ page-landing {
     background-image: url('../assets/imgs/background.png');
     background-size: cover;
     background-repeat: no-repeat;
+    .scroll-content {
+      padding: 10em 0em;
+    }
   }
   .container {
-    // background: rgba(255, 255, 255, 0.5);
+    vertical-align: middle;
   }
 }
