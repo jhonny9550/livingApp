@@ -1,6 +1,6 @@
-import * as authActions from '../actions/auth.actions';
 import { IUser, User, IUserModule } from "../models/user.model";
 import { createFeatureSelector, createSelector } from "@ngrx/store";
+import * as authActions from '../actions/auth.actions';
 
 export type Action = authActions.All;
 

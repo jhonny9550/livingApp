@@ -14,6 +14,8 @@ import { MyApp } from './app.component';
 import { MODULES } from "../modules/index";
 import { config } from "./environment/dev.environment";
 
+import '../modules/shared/imports/rxjs-operators';
+
 @NgModule({
   declarations: [
     MyApp
