@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage } from "ionic-angular";
-import { PAGES } from "../index";
+import { WaiterProfilePage } from "../waiter-profile/waiter-profile.page";
+import { WaiterTablesPage } from "../waiter-tables/waiter-tables.page";
 
-@IonicPage()
 @Component({
   selector: 'app-waiter-tabs',
   templateUrl: 'waiter-tabs.page.html'
@@ -10,7 +9,8 @@ import { PAGES } from "../index";
 
 export class WaiterTabsPage {
 
-  tabPages = PAGES;
+  tab1 = WaiterProfilePage;
+  tab2 = WaiterTablesPage;
 
   constructor() { }
 

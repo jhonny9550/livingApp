@@ -5,6 +5,7 @@ import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
 import { AuthProvider } from "../providers/auth.provider";
 import { IUser } from "../models/user.model";
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/filter';
@@ -18,7 +19,9 @@ import "rxjs/add/observable/of";
 import "rxjs/add/observable/empty";
 
 import * as userActions from '../actions/auth.actions';
-// import * as fromAuth from '../reducers/auth.reducer';
+
+import { LoginPage } from "../pages/login/login.page";
+import { WaiterTabsPage } from "../../waiter/pages/waiter-tabs/waiter-tabs.page";
 
 @Injectable()
 export class AuthEffects {
@@ -91,7 +94,8 @@ export class AuthEffects {
           console.log('Nav to cashier page');
         };
         case 'waiter': {
-          this.appCtrl.getActiveNav().setRoot('WaiterTabsPage');
+          this.appCtrl.getRootNav().setRoot(WaiterTabsPage)
+            .then(() => console.log('Views: ', this.appCtrl.getRootNavs()));
         };
         default: {
           console.log('User role: ', payload.role);
@@ -102,7 +106,7 @@ export class AuthEffects {
   @Effect()
   notAuthenticated$: Observable<Action> = this.actions
     .ofType(userActions.NOT_AUTHENTICATED)
-    .do(() => this.appCtrl.getRootNav().setRoot('LoginPage'))
+    .do(() => this.appCtrl.getRootNav().setRoot(LoginPage))
     .switchMap(() => []);
 
   @Effect()
