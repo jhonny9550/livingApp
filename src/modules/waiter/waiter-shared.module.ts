@@ -3,10 +3,12 @@ import { IonicModule } from "ionic-angular";
 import { COMPONENTS } from "./components/index";
 import { PROVIDERS } from "./providers/index";
 import { PAGES } from "./pages/index";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
-    IonicModule
+    IonicModule,
+    SharedModule
   ],
   exports: [
     ...COMPONENTS,

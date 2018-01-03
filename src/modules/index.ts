@@ -3,5 +3,5 @@ import { WaiterModule } from "./waiter/waiter.module";
 
 export const MODULES = [
   AuthModule,
-  WaiterModule
+  WaiterModule,
 ];
