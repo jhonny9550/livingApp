@@ -3,33 +3,33 @@ import { ToastController } from "ionic-angular";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
+import { ProductProvider } from "../providers/product.provider";
 
-import * as tableActions from '../actions/table.actions';
+import * as productActions from '../actions/product.actions';
 import { IFilter } from "../../shared/models/filter.model";
-import { TableProvider } from "../providers/table.provider";
-import { ITable } from "../models/table.model";
+import { IProduct } from "../models/product.model";
 
 @Injectable()
-export class TableEffects {
+export class ProductEffects {
 
   @Effect()
-  getTables$: Observable<Action> = this.actions
-    .ofType(tableActions.GET_TABLES)
+  getProducts$: Observable<Action> = this.actions
+    .ofType(productActions.GET_PRODUCTS)
     .map(toPayload)
-    .switchMap((payload?: { filter: IFilter }) => this.tableProvider.getTables(payload ? payload.filter : null))
-    .map((tables: ITable[]) => new tableActions.GetTablesSuccess({ tables }))
-    .catch(err => Observable.of(new tableActions.GetTablesFailed({ err })));
-
+    .switchMap((payload?: { filter: IFilter }) => this.productProvider.getProducts(payload ? payload.filter : null))
+    .map((products: IProduct[]) => new productActions.GetProductsSuccess(products))
+    .catch(err => Observable.of(new productActions.GetProductsFailed({ err })));
+  
   @Effect()
-  getTablesFailed$: Observable<Action> = this.actions
-    .ofType(tableActions.GET_TABLES_FAILED)
+  getProductsFailed$: Observable<Action> = this.actions
+    .ofType(productActions.GET_PRODUCTS_FAILED)
     .map(toPayload)
     .do((payload: { err: any }) => this.presentToast(payload.err || 'Server error'))
     .switchMap((payload: { err: any }) => []);
 
   constructor(
     private actions: Actions,
-    private tableProvider: TableProvider,
+    private productProvider: ProductProvider,
     private toastCtrl: ToastController
   ) { }
 
@@ -42,5 +42,4 @@ export class TableEffects {
       showCloseButton
     }).present();
   }
-
 }

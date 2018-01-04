@@ -1,3 +1,5 @@
+import { IFilter } from "../../shared/models/filter.model";
+
 export interface IProduct {
   id: string;
   name: string;
@@ -12,3 +14,14 @@ export interface IProduct {
   loading?: boolean;
   error?: any;
 };
+
+export interface IProductList {
+  products: IProduct[];
+  filter?: IFilter;
+  loading?: boolean;
+  error?: any;
+}
+
+export interface IProductModule {
+  productList: IProductList;
+}
