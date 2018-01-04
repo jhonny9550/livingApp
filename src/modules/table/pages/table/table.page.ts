@@ -4,8 +4,9 @@ import { ITable } from "../../models/table.model";
 import { Observable } from "rxjs/Rx";
 import { Store } from "@ngrx/store";
 
-import * as fromTable from '../../reducers/table.reducer';
 import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
+
+import * as fromTable from '../../reducers/table.reducer';
 
 @Component({
   selector: 'page-table',
@@ -19,7 +20,7 @@ export class TablePage {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private store: Store<ITable>
+    private store: Store<any>
   ) { }
 
   ngOnInit() {

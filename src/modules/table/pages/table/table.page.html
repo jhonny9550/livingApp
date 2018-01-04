@@ -11,17 +11,22 @@
     <ion-card class="table-card">
       <ion-card-header>
         <ion-card-title>
-          Tipo de mesa: {{ table.type }}
+          Total de ordenes: {{ table.orders.length || 0 }}
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="card-content">
         <ion-list *ngIf="table.orders; else orderSuggestion">
           <ion-list-header>
-            Total de ordenes: {{ table.orders.length || 0 }}
+            Tipo de mesa: {{ table.type }}
           </ion-list-header>
-          <button ion-item *ngFor="let order of table.orders" text-wrap>
-            2 productos, 11:14 P.M.
-            <ion-badge item-right color="warning">En despacho</ion-badge>
+          <button ion-item *ngFor="let orderId of table.orders; index as i;" text-wrap>
+            <div *ngIf="orderId | orderRef | async as order">
+              <b>Orden {{i + 1}}</b>
+              <p>
+                {{order.products.length}} Producto{{order.products.length > 1 ? 's' : ''}}, {{order.created_at}}
+              </p>
+              <ion-badge [color]="order.status | colorOrderStatus">{{order.status | parseOrderStatus}}</ion-badge>
+            </div>
           </button>
         </ion-list>
         <ng-template #orderSuggestion>
