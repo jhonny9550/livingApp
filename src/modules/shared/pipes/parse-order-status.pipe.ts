@@ -16,8 +16,8 @@ export class ParseOrderStatusPipe implements PipeTransform {
       case 'cashier_pendent': {
         return 'Pendiente en caja';
       };
-      case 'cashier_ok': {
-        return 'Listo en caja';
+      case 'delivered': {
+        return 'Entregado';
       }  
       default: {
         return 'Default option';

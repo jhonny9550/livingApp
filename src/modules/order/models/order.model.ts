@@ -6,8 +6,8 @@ export interface IOrder {
   status: string;
   user: string;
   products: string[];
-  created_at: string;
-  finish_at?: string;
+  created_at: number;
+  finish_at?: number;
   loading?: boolean;
   error?: any;
 };

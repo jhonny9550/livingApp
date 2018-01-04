@@ -14,11 +14,11 @@ export class ColorOrderStatusPipe implements PipeTransform {
         return 'primary';
       };
       case 'cashier_pendent': {
-        return 'warning';
+        return 'danger';
       };
-      case 'cashier_ok': {
-        return 'primary';
-      }  
+      case 'delivered': {
+        return 'secondary';
+      }; 
       default: {
         return 'light';
       };

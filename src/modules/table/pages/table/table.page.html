@@ -23,7 +23,7 @@
             <div *ngIf="orderId | orderRef | async as order">
               <b>Orden {{i + 1}}</b>
               <p>
-                {{order.products.length}} Producto{{order.products.length > 1 ? 's' : ''}}, {{order.created_at}}
+                {{order.products.length}} Producto{{order.products.length > 1 ? 's' : ''}}, {{order.created_at | parseDate:'hh:mm A'}}
               </p>
               <ion-badge [color]="order.status | colorOrderStatus">{{order.status | parseOrderStatus}}</ion-badge>
             </div>
