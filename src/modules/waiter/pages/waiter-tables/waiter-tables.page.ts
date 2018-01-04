@@ -27,7 +27,7 @@ export class WaiterTablesPage {
   }
 
   tableSelected(table: ITable) {
-    this.navCtrl.push(TablePage, table);
+    this.navCtrl.push(TablePage, table.id);
   }
 
 }

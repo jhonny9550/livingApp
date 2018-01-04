@@ -1,13 +1,13 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Mesa {{ table.number }}
+      Mesa {{ (table$ | async).number }}
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div>
+  <div *ngIf="table$ | async as table">
     <ion-card class="table-card">
       <ion-card-header>
         <ion-card-title>
@@ -15,7 +15,7 @@
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="card-content">
-        <ion-list *ngIf="table.orders">
+        <ion-list *ngIf="table.orders; else orderSuggestion">
           <ion-list-header>
             Total de ordenes: {{ table.orders.length || 0 }}
           </ion-list-header>
@@ -24,6 +24,10 @@
             <ion-badge item-right color="warning">En despacho</ion-badge>
           </button>
         </ion-list>
+        <ng-template #orderSuggestion>
+          <hr>
+          <p ion-text text-center>No hay ordenes registradas. Añade una.</p>
+        </ng-template>
         <ion-fab bottom right edge>
           <button ion-fab mini color="primary">
             <ion-icon name="add" color="light"></ion-icon>
@@ -37,7 +41,7 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="table.orders">
+<ion-footer *ngIf="(table$ | async).orders">
   <button ion-button block no-margin large color="secondary">
     Cobrar
   </button>

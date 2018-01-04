@@ -27,3 +27,5 @@ export function reducer(state: ITableList = initialState, action: Action) {
 
 export const getTableModule = createFeatureSelector<ITableModule>('tableModule');
 export const getTableList = createSelector(getTableModule, (state: ITableModule) => state.tableList);
+export const getTable = id => createSelector(getTableList, (state: ITableList) => state.tables.find(el => el.id === id));
+
