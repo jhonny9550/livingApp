@@ -19,8 +19,9 @@
           <ion-list-header>
             Total de ordenes: {{ table.orders.length || 0 }}
           </ion-list-header>
-          <button ion-item *ngFor="let order of table.orders">
-            {{ order }}
+          <button ion-item *ngFor="let order of table.orders" text-wrap>
+            2 productos, 11:14 P.M.
+            <ion-badge item-right color="warning">En despacho</ion-badge>
           </button>
         </ion-list>
         <ion-fab bottom right edge>
@@ -30,10 +31,14 @@
         </ion-fab>
       </ion-card-content>
     </ion-card>
-    <div padding>
-      <button ion-button block color="secondary">
-        Finalizar orden
-      </button>
-    </div>
+    <!-- <div padding>
+      
+    </div> -->
   </div>
 </ion-content>
+
+<ion-footer *ngIf="table.orders">
+  <button ion-button block no-margin large color="secondary">
+    Cobrar
+  </button>
+</ion-footer>

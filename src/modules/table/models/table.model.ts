@@ -6,6 +6,7 @@ export interface ITable {
   available: boolean;
   type?: string;
   capacity?: number;
+  clients_served?: number;
   orders?: string[];
   loading?: boolean;
   error?: any;
