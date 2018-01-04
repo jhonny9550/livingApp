@@ -5,7 +5,7 @@ export interface IProduct {
   name: string;
   type: string;
   price: number;
-  cuantity: number;
+  available_quantity: number;
   brand: string;
   available: boolean;
   discount?: number;

@@ -27,8 +27,8 @@ export class TablePage {
     this.table$ = this.store.select(fromTable.getTable(this.navParams.data));
   }
 
-  addOrder(tableId: string) {
-    this.navCtrl.push(AddOrderPage, tableId);
+  addOrder(table: ITable) {
+    this.navCtrl.push(AddOrderPage, table);
   }
 
 }

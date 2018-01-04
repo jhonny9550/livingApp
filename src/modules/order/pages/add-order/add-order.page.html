@@ -7,5 +7,26 @@
 </ion-header>
 
 <ion-content>
-  
+  <h2 ion-text text-center>Mesa: {{ currentTable.number }}</h2>
+  <ion-list>
+    <ion-list-header>Productos</ion-list-header>
+    <button ion-item *ngFor="let product of products">
+      <b item-left>{{ product.quantity }}</b>
+      {{ product.item }}
+      <b item-right>$82.000</b>
+    </button>
+    <ion-item ion-item>
+      <button ion-button icon-right clear item-right>
+        Añadir producto
+        <ion-icon name="add" color="primary"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer *ngIf="products.length > 0">
+  <h6 ion-text text-center>Total: $82.000</h6>
+  <button ion-button block large no-margin color="secondary">
+    Generar orden
+  </button>
+</ion-footer>

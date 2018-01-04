@@ -5,7 +5,7 @@ export interface IOrder {
   table: string;
   status: string;
   user: string;
-  products: string[];
+  products: IOrderProduct[];
   created_at: number;
   finish_at?: number;
   loading?: boolean;
@@ -21,4 +21,9 @@ export interface IOrderList {
 
 export interface IOrderModule {
   orderList: IOrderList;
+};
+
+export interface IOrderProduct {
+  item: string;
+  quantity: number;
 };
