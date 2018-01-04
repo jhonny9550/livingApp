@@ -3,8 +3,9 @@ import { IFilter } from "../../shared/models/filter.model";
 export interface ITable {
   id: string;
   number: string;
-  type: string;
   available: boolean;
+  type?: string;
+  capacity?: number;
   orders?: string[];
   loading?: boolean;
   error?: any;

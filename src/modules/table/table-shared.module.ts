@@ -5,6 +5,7 @@ import { EffectsModule } from "@ngrx/effects";
 import { reducer } from "./reducers/table.reducer";
 import { EFFECTS } from "./effects/index";
 import { PROVIDERS } from "./providers/index";
+import { PAGES } from "./pages/index";
 
 @NgModule({
   imports: [
@@ -12,8 +13,9 @@ import { PROVIDERS } from "./providers/index";
     StoreModule.forFeature('tableModule', { tableList: reducer }),
     EffectsModule.forFeature(EFFECTS)
   ],
-  exports: [],
-  declarations: [],
+  exports: [...PAGES],
+  declarations: [...PAGES],
   providers: [...PROVIDERS],
+  entryComponents: [...PAGES]
 })
 export class TableSharedModule { }

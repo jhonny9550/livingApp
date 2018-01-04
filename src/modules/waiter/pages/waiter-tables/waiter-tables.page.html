@@ -14,21 +14,10 @@
       <ion-spinner margin-top name="crescent" color="primary"></ion-spinner>
     </div>
     <ion-list *ngIf="tableList.tables.length > 0; else notTables">
-      <button ion-item *ngFor="let table of tableList.tables">
+      <button ion-item *ngFor="let table of tableList.tables" (click)="tableSelected(table)">
         Mesa {{ table.number }}
         <ion-badge color="primary" *ngIf="table.orders" item-right>{{table.orders.length}}</ion-badge>
       </button>
-      <!-- <button ion-item>Mesa 2</button>
-        <button ion-item>Mesa 3</button>
-        <button ion-item>Mesa 4</button>
-        <button ion-item>Mesa 5</button>
-        <button ion-item>Mesa 6</button>
-        <button ion-item>Mesa 7</button>
-        <button ion-item>Mesa 8</button>
-        <button ion-item>Mesa 9</button>
-        <button ion-item>Mesa 10</button>
-        <button ion-item>Mesa 11</button>
-        <button ion-item>Mesa 12</button> -->
       </ion-list>
       <ng-template #notTables>
         <div text-center *ngIf="!tableList.loading">

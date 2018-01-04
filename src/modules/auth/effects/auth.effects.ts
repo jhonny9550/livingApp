@@ -57,7 +57,7 @@ export class AuthEffects {
   getUserDataSuccess$: Observable<Action> = this.actions
     .ofType(userActions.GET_USER_DATA_SUCCESS)
     .map(toPayload)
-    .do((payload: IUser) => this.presentToast('Bienvenido ' + payload.displayName))
+    .do((payload: IUser) => this.presentToast('Bienvenido ' + payload.displayName, 2000))
     .map((payload: IUser) => new userActions.Authenticated({ ...payload }));
 
   @Effect()
