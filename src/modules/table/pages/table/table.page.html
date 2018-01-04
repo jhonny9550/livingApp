@@ -29,15 +29,12 @@
           <p ion-text text-center>No hay ordenes registradas. Añade una.</p>
         </ng-template>
         <ion-fab bottom right edge>
-          <button ion-fab mini color="primary">
+          <button ion-fab mini color="primary" (click)="addOrder(table.id)">
             <ion-icon name="add" color="light"></ion-icon>
           </button>
         </ion-fab>
       </ion-card-content>
     </ion-card>
-    <!-- <div padding>
-      
-    </div> -->
   </div>
 </ion-content>
 

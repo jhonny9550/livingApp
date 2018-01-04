@@ -4,6 +4,7 @@ import { StoreModule } from "@ngrx/store";
 import { EffectsModule } from "@ngrx/effects";
 import { PROVIDERS } from "./providers/index";
 import { EFFECTS } from "./effects/index";
+import { PAGES } from "./pages/index";
 import { reducer } from "./reducers/order.reducer";
 
 @NgModule({
@@ -12,8 +13,9 @@ import { reducer } from "./reducers/order.reducer";
     StoreModule.forFeature('orderModule', { orderList: reducer }),
     EffectsModule.forFeature(EFFECTS)
   ],
-  exports: [],
-  declarations: [],
+  exports: [...PAGES],
+  declarations: [...PAGES],
   providers: [...PROVIDERS],
+  entryComponents: [...PAGES]
 })
 export class OrderSharedModule { }

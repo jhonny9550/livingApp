@@ -5,6 +5,7 @@ import { Observable } from "rxjs/Rx";
 import { Store } from "@ngrx/store";
 
 import * as fromTable from '../../reducers/table.reducer';
+import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
 
 @Component({
   selector: 'page-table',
@@ -22,8 +23,11 @@ export class TablePage {
   ) { }
 
   ngOnInit() {
-    console.log('Nav params: ', this.navParams.data);
     this.table$ = this.store.select(fromTable.getTable(this.navParams.data));
+  }
+
+  addOrder(tableId: string) {
+    this.navCtrl.push(AddOrderPage, tableId);
   }
 
 }
