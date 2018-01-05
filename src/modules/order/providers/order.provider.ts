@@ -12,7 +12,7 @@ export class OrderProvider {
   ) { }
 
   getOrders(filter?: IFilter) {
-    return this.afStore.collection(`/orders`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value) : ref)
+    return this.afStore.collection(`/orders`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value).endAt(filter.value + '\uf8ff') : ref)
     .valueChanges()
     .map((data: IOrder[]) => { if (data) return data; else throw 'Error consultando datos' });
   }

@@ -11,7 +11,7 @@ export class TableProvider {
   ) { }
 
   getTables(filter?: IFilter) {
-    return this.afStore.collection(`/tables`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value) : ref)
+    return this.afStore.collection(`/tables`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value).endAt(filter.value + '\uf8ff') : ref)
       .valueChanges()
       .map((data: ITable[]) => { if (data) return data; else throw 'Error consultando datos' });
   }
