@@ -16,4 +16,19 @@ export class TableProvider {
       .map((data: ITable[]) => { if (data) return data; else throw 'Error consultando datos' });
   }
 
+  getTableRef(id: string) {
+    return this.afStore.doc(`/tables/${id}`).ref;
+  }
+
+  addOrder(table: any, order: any) {
+    return this.afStore.firestore.runTransaction(transaction => {
+      return transaction.get(table).then(tableDoc => {
+        let currentOrders: Array<any> = tableDoc.data().orders;
+        currentOrders.push(order);
+        transaction.update(table, { orders: currentOrders });
+        return currentOrders;
+      });
+    });
+  }
+
 }

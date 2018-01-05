@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController } from "ionic-angular";
-import { ITable } from "../../../table/models/table.model";
-import { IOrderProduct } from "../../models/order.model";
+import { Store } from "@ngrx/store";
 import { SelectProductPage } from "../../../product/pages/select-product/select-product.page";
+
+import { ITable } from "../../../table/models/table.model";
+import { IOrderProduct, IOrder } from "../../models/order.model";
+
+import * as orderActions from '../../actions/order.actions';
 
 @Component({
   selector: 'page-add-order',
@@ -17,11 +21,13 @@ export class AddOrderPage {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private store: Store<any>
   ) { }
 
   ngOnInit() {
     this.currentTable = this.navParams.data;
+    console.log('Current table: ', this.currentTable);
   }
 
   addProduct() {
@@ -49,6 +55,16 @@ export class AddOrderPage {
         return total;
       }
     }, 0)
+  }
+
+  createOrder() {
+    const newOrder: IOrder = {
+      products: this.products,
+      status: 'cashier_pendent',
+      table: this.currentTable.id,
+      total_amount: this.getTotalAmount()
+    };
+    this.store.dispatch(new orderActions.CreateOrder(newOrder));
   }
 
 }

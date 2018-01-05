@@ -31,7 +31,7 @@
 
 <ion-footer>
   <h6 ion-text text-center>Total: {{ getTotalAmount() | currency:'USD':'no-symbol':'1.0-0'}}</h6>
-  <button ion-button block large no-margin color="secondary" *ngIf="products.length > 0">
+  <button ion-button block large no-margin color="secondary" *ngIf="products.length > 0" (click)="createOrder()">
     Generar orden
   </button>
 </ion-footer>

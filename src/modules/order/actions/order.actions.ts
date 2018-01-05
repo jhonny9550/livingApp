@@ -6,6 +6,10 @@ export const GET_ORDERS = '[order] get orders';
 export const GET_ORDERS_SUCCESS = '[order] get orders success';
 export const GET_ORDERS_FAILED = '[order] get orders failed';
 
+export const CREATE_ORDER = '[order] create order';
+export const CREATE_ORDER_SUCCESS = '[order] create order success';
+export const CREATE_ORDER_FAILED = '[order] create order failed';
+
 export class GetOrders implements Action {
   readonly type = GET_ORDERS;
   constructor(public payload?: { filter: IFilter }) { }
@@ -21,7 +25,25 @@ export class GetOrdersFailed implements Action {
   constructor(public payload: { err?: any }) { }
 };
 
+export class CreateOrder implements Action {
+  readonly type = CREATE_ORDER;
+  constructor(public payload: IOrder) { }
+}
+
+export class CreateOrderSuccess implements Action {
+  readonly type = CREATE_ORDER_SUCCESS;
+  constructor() { }
+}
+
+export class CreateOrderFailed implements Action {
+  readonly type = CREATE_ORDER_FAILED;
+  constructor(public payload: { err: any }) { }
+}
+
 export type All
   = GetOrders
   | GetOrdersSuccess
-  | GetOrdersFailed;
+  | GetOrdersFailed
+  | CreateOrder
+  | CreateOrderSuccess
+  | CreateOrderFailed;

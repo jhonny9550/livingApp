@@ -21,7 +21,7 @@
       <ion-spinner name="crescent" color="primary"></ion-spinner>
     </div>
     <ion-list *ngIf="productList.products.length > 0 && !productList.loading">
-      <button ion-item *ngFor="let product of productList.products" (click)="itemSelected(product)">
+      <button ion-item text-wrap *ngFor="let product of productList.products" (click)="itemSelected(product)">
         {{ product.name | titlecase }}
         <b item-right>{{ product.price | currency:'COP':'no-symbol':'1.0-0' }}</b>
       </button>

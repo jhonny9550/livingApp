@@ -29,6 +29,10 @@ export class AuthProvider {
       .map(user => { if (user) return user; else throw 'Datos de usuario no encontrados' });
   }
 
+  getUserRef(uid: string) {
+    return this.afStore.doc(`/users/${uid}`).ref;
+  }
+
   parseErrorCode(error: { code: string, message: string }): string {
     switch (error.code) {
       case 'auth/wrong-password':

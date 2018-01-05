@@ -1,13 +1,13 @@
 import { IFilter } from "../../shared/models/filter.model";
 
 export interface IOrder {
-  id: string;
-  table: string;
+  id?: string;
+  table: any;
   status: string;
-  user: string;
+  user?: any;
   products: IOrderProduct[];
   total_amount: number;
-  created_at: number;
+  created_at?: number;
   finish_at?: number;
   loading?: boolean;
   error?: any;

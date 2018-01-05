@@ -17,7 +17,16 @@ export function reducer(state: IOrderList = initialState, action: Action) {
     };
     case orderActions.GET_ORDERS_FAILED: {
       return initialState;
-    }; 
+    };
+    case orderActions.CREATE_ORDER: {
+      return { ...state, loading: true };
+    };
+    case orderActions.CREATE_ORDER_SUCCESS: {
+      return { ...state, loading: false };
+    };
+    case orderActions.CREATE_ORDER_FAILED: {
+      return { ...state, loading: false };
+    };
     default:
       return state;
   }
