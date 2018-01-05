@@ -1,0 +1,28 @@
+page-view-order {
+  .demo:empty {
+    margin: auto;
+		width: 270px;
+		height: 50px; /* change height to see repeat-y behavior */
+    
+    background-image:
+      linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+			linear-gradient( lightgray 20px, transparent 0 );
+
+		background-size:
+			300px 50px;
+
+		background-position:
+			0px 15px;
+
+    animation: shine 1s infinite;
+  }
+  
+  @keyframes shine {
+		to {
+			background-position:
+				100% 0,
+			  0px 15px;
+		}
+	}
+
+}

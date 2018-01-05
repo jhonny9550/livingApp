@@ -8,7 +8,6 @@ import { PAGES } from "./pages/index";
 import { reducer } from "./reducers/order.reducer";
 import { PIPES } from "./pipes/index";
 import { ProductSharedModule } from "../product/product-shared.module";
-import { TableSharedModule } from "../table/table-shared.module";
 import { AuthSharedModule } from "../auth/auth-shared.module";
 import { SharedModule } from "../shared/shared.module";
 

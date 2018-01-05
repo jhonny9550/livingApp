@@ -21,7 +21,7 @@
       <ion-item *ngFor="let productReference of order.products" text-wrap>
         <b item-left>{{productReference.quantity}}</b>
         {{ (productReference.item | parseProductRef | async)?.name | titlecase }}
-        <b item-right>{{ (productReference.item | parseProductRef | async)?.price | currency:'COP':'no-symbol':'1.0-0' }}</b>
+        <b item-right class="demo">{{ (productReference.item | parseProductRef | async)?.price | currency:'COP':'no-symbol':'1.0-0' }}</b>
       </ion-item>
     </ion-list>
   </div>

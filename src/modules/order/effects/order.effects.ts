@@ -9,7 +9,6 @@ import { AuthProvider } from "../../auth/providers/auth.provider";
 
 import { IFilter } from "../../shared/models/filter.model";
 import { IOrder } from "../models/order.model";
-import { IUser } from "../../auth/models/user.model";
 
 import * as orderActions from '../actions/order.actions';
 import * as fromAuth from '../../auth/reducers/auth.reducer';
