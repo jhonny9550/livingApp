@@ -34,17 +34,17 @@ export class AddOrderPage {
     modal.present();
     modal.onDidDismiss((product: IOrderProduct) => {
       if (product) {
-        console.log('Product added: ', product);
-        console.log('Pre products: ', this.products);
-        this.products = this.products.map(el => el.item === product.item ? { ...el, quantity: el.quantity + product.quantity } : el);
-        console.log('Post products: ', this.products);
+        if (this.products.find(el => el.item === product.item)) {
+          this.products = this.products.map(el => el.item === product.item ? { ...el, quantity: el.quantity + product.quantity } : el);
+        } else {
+          this.products.push(product);
+        }
       }
     });
   }
 
   getTotalAmount() {
     return this.products.reduce((total, next) => {
-      console.log('Item: ', document.getElementById(next.item));
       const item = document.getElementById(next.item);
       if (item) {
         const itemText = item.innerText;

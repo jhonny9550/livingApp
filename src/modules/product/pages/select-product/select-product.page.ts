@@ -31,8 +31,6 @@ export class SelectProductPage {
 
   search(e) {
     if (this.searchInput.toLowerCase().trim() !== '') {
-      console.log('Search: ', this.searchInput);
-      console.log('Parsed search: ', this.searchInput.toLowerCase().trim());
       this.store.dispatch(new productActions.GetProducts({ filter: { field: 'name', value: this.searchInput.toLowerCase() } }));
     } else {
       this.store.dispatch(new productActions.GetProducts());
