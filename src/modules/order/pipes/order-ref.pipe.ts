@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { OrderProvider } from "../providers/order.provider";
+import { } from 'angularfire2/firestore';
 
 @Pipe({
   name: 'orderRef'
@@ -7,7 +8,7 @@ import { OrderProvider } from "../providers/order.provider";
 
 export class OrderRefPipe implements PipeTransform {
 
-  transform(value: string, ...args: any[]): any {
+  transform(value: any, ...args: any[]): any {
     if(value) return this.orderProvider.getOrderById(value);
   }
 

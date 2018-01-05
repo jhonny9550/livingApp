@@ -47,11 +47,9 @@ export class AuthEffects {
   getUserData$: Observable<Action> = this.actions
     .ofType(userActions.GET_USER_DATA)
     .map(toPayload)
-    .switchMap((payload: { uid: string }) => {
-      return this.auth.fetchUserData(payload.uid)
-        .then(user => new userActions.GetUserDataSuccess({ ...user }))
-        .catch(error => new userActions.GetUserDataFailed({ error }));
-    });
+    .switchMap((payload: { uid: string }) => this.auth.fetchUserData(payload.uid))
+    .map((user: IUser) => new userActions.GetUserDataSuccess({ ...user }))
+    .catch(error => Observable.of(new userActions.GetUserDataFailed({ error })));
 
   @Effect()
   getUserDataSuccess$: Observable<Action> = this.actions
@@ -82,8 +80,7 @@ export class AuthEffects {
           console.log('Nav to cashier page');
         };
         case 'waiter': {
-          this.appCtrl.getRootNav().setRoot(WaiterTabsPage)
-            .then(() => console.log('Views: ', this.appCtrl.getRootNavs()));
+          this.appCtrl.getRootNav().setRoot(WaiterTabsPage);
         };
         default: {
           console.log('User role: ', payload.role);

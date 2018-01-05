@@ -25,6 +25,6 @@ export interface IOrderModule {
 };
 
 export interface IOrderProduct {
-  item: string;
+  item: any;
   quantity: number;
 };

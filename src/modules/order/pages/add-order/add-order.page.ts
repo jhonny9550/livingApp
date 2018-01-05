@@ -21,12 +21,7 @@ export class AddOrderPage {
   ) { }
 
   ngOnInit() {
-    console.log('Nav params: ', this.navParams.data);
     this.currentTable = this.navParams.data;
-    this.products = [{
-      item: 'productId1',
-      quantity: 2
-    }];
   }
 
   addProduct() {
@@ -34,8 +29,8 @@ export class AddOrderPage {
     modal.present();
     modal.onDidDismiss((product: IOrderProduct) => {
       if (product) {
-        if (this.products.find(el => el.item === product.item)) {
-          this.products = this.products.map(el => el.item === product.item ? { ...el, quantity: el.quantity + product.quantity } : el);
+        if (this.products.find(el => el.item.id === product.item.id)) {
+          this.products = this.products.map(el => el.item.id === product.item.id ? { ...el, quantity: el.quantity + product.quantity } : el);
         } else {
           this.products.push(product);
         }
@@ -45,7 +40,7 @@ export class AddOrderPage {
 
   getTotalAmount() {
     return this.products.reduce((total, next) => {
-      const item = document.getElementById(next.item);
+      const item = document.getElementById(next.item.id);
       if (item) {
         const itemText = item.innerText;
         const nextAmount = parseInt(itemText);

@@ -7,7 +7,7 @@ import { ProductProvider } from "../providers/product.provider";
 
 export class ParseProductRefPipe implements PipeTransform {
 
-  transform(value: string, ...args: any[]): any {
+  transform(value: any, ...args: any[]): any {
     if (value) return this.productProvider.getProduct(value);  
   }
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFirestore, fromDocRef } from 'angularfire2/firestore';
 import { IFilter } from "../../shared/models/filter.model";
 import { IProduct } from "../models/product.model";
 import { Observable } from "rxjs/Rx";
@@ -8,19 +8,23 @@ import { Observable } from "rxjs/Rx";
 export class ProductProvider {
 
   constructor(
-    private afDatabase: AngularFireDatabase
+    private afStore: AngularFirestore
   ) { }
 
   getProducts(filter?: IFilter) {
-    return this.afDatabase.list(`/products`, ref => filter ? ref.orderByChild(filter.field).startAt(filter.value) : ref)
+    return this.afStore.collection(`/products`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value) : ref)
       .valueChanges()
       .map((data: IProduct[]) => { if (data) return data; else throw 'Error consultando datos' });
   }
 
-  getProduct(id: string): Observable<IProduct> {
-    return this.afDatabase.object(`/products/${id}`)
-      .valueChanges()
+  getProduct(ref): Observable<IProduct> {
+    return fromDocRef(ref)
+      .map(snap => snap.payload.data())  
       .map((data: IProduct) => { if (data) return data; else throw 'Error consultando datos' });
+  }
+
+  getProductRef(id: string) {
+    return this.afStore.doc(`/products/${id}`).ref;
   }
 
 }

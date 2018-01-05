@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFirestore } from 'angularfire2/firestore';
 import { IFilter } from "../../shared/models/filter.model";
 import { ITable } from "../models/table.model";
 
@@ -7,11 +7,11 @@ import { ITable } from "../models/table.model";
 export class TableProvider {
 
   constructor(
-    private afDatabase: AngularFireDatabase
+    private afStore: AngularFirestore
   ) { }
 
   getTables(filter?: IFilter) {
-    return this.afDatabase.list(`/tables`, ref => filter ? ref.orderByChild(filter.field).startAt(filter.value) : ref)
+    return this.afStore.collection(`/tables`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value) : ref)
       .valueChanges()
       .map((data: ITable[]) => { if (data) return data; else throw 'Error consultando datos' });
   }

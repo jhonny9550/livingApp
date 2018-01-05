@@ -6,6 +6,7 @@ import { IProductList, IProduct } from "../../models/product.model";
 
 import * as fromProduct from '../../reducers/product.reducer';
 import * as productActions from '../../actions/product.actions';
+import { ProductProvider } from "../../providers/product.provider";
 
 @Component({
   selector: 'page-select-product',
@@ -21,7 +22,8 @@ export class SelectProductPage {
   constructor(
     public viewCtrl: ViewController,
     private store: Store<IProductList>,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private productProvider: ProductProvider
   ) { }
 
   ngOnInit() { 
@@ -63,7 +65,8 @@ export class SelectProductPage {
           text: 'Aceptar',
           role: 'cancel',
           handler: () => {
-            this.viewCtrl.dismiss({ item: item.id, quantity: this.quantity });
+            const productRef = this.productProvider.getProductRef(item.id);
+            this.viewCtrl.dismiss({ item: productRef, quantity: this.quantity });
           }
         }
       ]

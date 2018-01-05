@@ -17,7 +17,7 @@
       </div>
       <div item-right *ngIf="product.item | parseProductRef | async as productObj">
         <b>{{productObj.price | currency:'USD':'no-symbol':'1.0-0'}}</b>
-        <p hidden [id]="product.item">{{productObj.price * product.quantity}}</p>
+        <p hidden [id]="product.item.id">{{productObj.price * product.quantity}}</p>
       </div>
     </button>
     <ion-item ion-item>
