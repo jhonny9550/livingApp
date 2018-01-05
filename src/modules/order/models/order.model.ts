@@ -6,6 +6,7 @@ export interface IOrder {
   status: string;
   user: string;
   products: IOrderProduct[];
+  total_amount: number;
   created_at: number;
   finish_at?: number;
   loading?: boolean;

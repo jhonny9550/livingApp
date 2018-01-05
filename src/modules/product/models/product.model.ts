@@ -8,6 +8,7 @@ export interface IProduct {
   available_quantity: number;
   brand: string;
   available: boolean;
+  imageUrl?: string;
   discount?: number;
   label?: string;
   info?: string;

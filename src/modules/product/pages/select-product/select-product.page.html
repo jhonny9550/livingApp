@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Seleccionar producto
+    </ion-title>
+  </ion-navbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Buscar por nombre" [showCancelButton]="true" (ionInput)="search($event)" (ionCancel)="cancelSearch()" [(ngModel)]="searchInput"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="productList$ | async as productList;">
+    <div text-center margin-top *ngIf="productList.loading">
+      <p>Cargando productos</p>
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+    </div>
+    <ion-list *ngIf="productList.products.length > 0;">
+      <button ion-item *ngFor="let product of productList.products" (click)="itemSelected(product)">
+        {{ product.name | titlecase }}
+        <b item-right>{{ product.price | currency:'COP':'no-symbol':'1.0-0' }}</b>
+      </button>
+    </ion-list>
+    <div *ngIf="productList.products.length === 0 && !productList.loading">
+      <p ion-text text-center>No se han encontrado productos</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-item text-center>
+    <button ion-button icon-only large item-left clear (click)="remove()">
+      <ion-icon name="remove" color="danger"></ion-icon>
+    </button>
+    <b>Cantidad: {{ quantity }}</b>
+    <button ion-button icon-only large item-right clear (click)="add()">
+      <ion-icon name="add" color="secondary"></ion-icon>
+    </button>
+  </ion-item>
+</ion-footer>

@@ -7,10 +7,12 @@ import { EFFECTS } from "./effects/index";
 import { PAGES } from "./pages/index";
 import { reducer } from "./reducers/order.reducer";
 import { PIPES } from "./pipes/index";
+import { ProductSharedModule } from "../product/product-shared.module";
 
 @NgModule({
   imports: [
     IonicModule,
+    ProductSharedModule,
     StoreModule.forFeature('orderModule', { orderList: reducer }),
     EffectsModule.forFeature(EFFECTS)
   ],

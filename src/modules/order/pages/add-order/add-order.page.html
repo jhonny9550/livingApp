@@ -12,11 +12,16 @@
     <ion-list-header>Productos</ion-list-header>
     <button ion-item *ngFor="let product of products">
       <b item-left>{{ product.quantity }}</b>
-      {{ product.item }}
-      <b item-right>$82.000</b>
+      <div *ngIf="product.item | parseProductRef | async as productObj">
+        {{ productObj.name | titlecase }}
+      </div>
+      <div item-right *ngIf="product.item | parseProductRef | async as productObj">
+        <b>{{productObj.price | currency:'USD':'no-symbol':'1.0-0'}}</b>
+        <p hidden [id]="product.item">{{productObj.price * product.quantity}}</p>
+      </div>
     </button>
     <ion-item ion-item>
-      <button ion-button icon-right clear item-right>
+      <button ion-button icon-right clear item-right (click)="addProduct()">
         Añadir producto
         <ion-icon name="add" color="primary"></ion-icon>
       </button>
@@ -24,9 +29,9 @@
   </ion-list>
 </ion-content>
 
-<ion-footer *ngIf="products.length > 0">
-  <h6 ion-text text-center>Total: $82.000</h6>
-  <button ion-button block large no-margin color="secondary">
+<ion-footer>
+  <h6 ion-text text-center>Total: {{ getTotalAmount() | currency:'USD':'no-symbol':'1.0-0'}}</h6>
+  <button ion-button block large no-margin color="secondary" *ngIf="products.length > 0">
     Generar orden
   </button>
 </ion-footer>
