@@ -8,7 +8,7 @@ import { ProductProvider } from "../providers/product.provider";
 export class ParseProductRefPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    if (value) return this.productProvider.getProduct(value);  
+    if (value) return this.productProvider.getProductByRef(value);  
   }
 
   constructor(

@@ -5,6 +5,8 @@ import { Observable } from "rxjs/Rx";
 import { OrderProvider } from "../../providers/order.provider";
 import { IOrder } from "../../models/order.model";
 
+import { ViewProductPage } from "../../../product/pages/view-product/view-product.page";
+
 import * as orderActions from '../../actions/order.actions';
 
 @Component({
@@ -27,6 +29,10 @@ export class ViewOrderPage {
 
   ngOnInit() { 
     this.order$ = this.orderProvider.getOrderByRef(this.navParams.data);
+  }
+
+  productSelected(productRef: any) {
+    this.modalCtrl.create(ViewProductPage, productRef).present();
   }
 
   cancelOrder() {

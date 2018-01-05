@@ -14,15 +14,19 @@
         <ion-badge [color]="order.status | colorOrderStatus">{{ order.status | parseOrderStatus }}</ion-badge>
       </ion-item>
       <ion-item>
+        <b item-left>Hora de creación: </b>
+        {{ order.created_at |  parseDate:'h:mm A' }}
+      </ion-item>
+      <ion-item>
         <b item-left>Total: </b>
         {{ order.total_amount | currency:'USD':'no-symbol':'1.0-0' }}
       </ion-item>
       <ion-item-divider>Productos</ion-item-divider>
-      <ion-item *ngFor="let productReference of order.products" text-wrap>
+      <button ion-item *ngFor="let productReference of order.products" text-wrap (click)="productSelected(productReference.item)">
         <b item-left>{{productReference.quantity}}</b>
         {{ (productReference.item | parseProductRef | async)?.name | titlecase }}
         <b item-right class="demo">{{ (productReference.item | parseProductRef | async)?.price | currency:'COP':'no-symbol':'1.0-0' }}</b>
-      </ion-item>
+      </button>
     </ion-list>
   </div>
 </ion-content>
