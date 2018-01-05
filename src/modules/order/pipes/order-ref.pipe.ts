@@ -9,7 +9,7 @@ import { } from 'angularfire2/firestore';
 export class OrderRefPipe implements PipeTransform {
 
   transform(value: any, ...args: any[]): any {
-    if(value) return this.orderProvider.getOrderById(value);
+    if(value) return this.orderProvider.getOrderByRef(value);
   }
 
   constructor(

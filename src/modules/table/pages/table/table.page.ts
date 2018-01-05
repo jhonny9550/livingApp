@@ -7,6 +7,7 @@ import { Store } from "@ngrx/store";
 import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
 
 import * as fromTable from '../../reducers/table.reducer';
+import { ViewOrderPage } from "../../../order/pages/view-order/view-order.page";
 
 @Component({
   selector: 'page-table',
@@ -29,6 +30,10 @@ export class TablePage {
 
   addOrder(table: ITable) {
     this.navCtrl.push(AddOrderPage, table);
+  }
+
+  orderSelected(orderRef: any) {
+    this.navCtrl.push(ViewOrderPage, orderRef);
   }
 
 }

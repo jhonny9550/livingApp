@@ -19,7 +19,7 @@ export class OrderProvider {
       .map((data: IOrder[]) => { if (data) return data; else throw 'Error consultando datos' });
   }
 
-  getOrderById(ref): Observable<IOrder> {
+  getOrderByRef(ref): Observable<IOrder> {
     return fromDocRef(ref)
       .map(snap => snap.payload.data())
       .map((data: IOrder) => { if (data) return data; else throw 'Error consultando datos' });

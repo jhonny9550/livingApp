@@ -19,7 +19,7 @@
           <ion-list-header>
             Tipo de mesa: {{ table.type }}
           </ion-list-header>
-          <button ion-item *ngFor="let orderId of table.orders; index as i;" text-wrap>
+          <button ion-item *ngFor="let orderId of table.orders; index as i;" text-wrap (click)="orderSelected(orderId)">
             <div *ngIf="orderId | orderRef | async as order">
               <b>Orden {{i + 1}}</b>
               <p>

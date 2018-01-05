@@ -10,10 +10,12 @@ import { PIPES } from "./pipes/index";
 import { ProductSharedModule } from "../product/product-shared.module";
 import { TableSharedModule } from "../table/table-shared.module";
 import { AuthSharedModule } from "../auth/auth-shared.module";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   imports: [
     IonicModule,
+    SharedModule,
     ProductSharedModule,
     AuthSharedModule,
     StoreModule.forFeature('orderModule', { orderList: reducer }),
