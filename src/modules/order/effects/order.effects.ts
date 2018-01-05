@@ -45,6 +45,17 @@ export class OrderEffects {
     .do(() => this.appCtrl.getActiveNav().pop())
     .catch(err => Observable.of(new orderActions.CreateOrderFailed({ err })));
   
+  @Effect()
+  cancelOrder$: Observable<Action> = this.actions
+    .ofType(orderActions.CANCEL_ORDER)
+    .map(toPayload)
+    .do((payload: any) => this.loader.setContent('Cancelando orden').present())
+    .switchMap((payload: any) => this.orderProvider.changeOrderStatus(payload, 'canceled'))
+    .do(() => this.loader.dismiss())
+    .do(() => this.appCtrl.getActiveNav().pop())
+    .map(() => new orderActions.CancelOrderSuccess())
+    .catch(err => Observable.of(new orderActions.CancelOrderFailed({ err })));
+  
   loader: Loading;
 
   constructor(

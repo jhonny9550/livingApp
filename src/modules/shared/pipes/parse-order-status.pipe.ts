@@ -19,6 +19,9 @@ export class ParseOrderStatusPipe implements PipeTransform {
       case 'delivered': {
         return 'Entregado';
       };
+      case 'canceled': {
+        return 'Cancelada';
+      };
       default: {
         return 'Default option';
       };
