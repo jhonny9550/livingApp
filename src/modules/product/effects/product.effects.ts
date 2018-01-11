@@ -5,9 +5,10 @@ import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
 import { ProductProvider } from "../providers/product.provider";
 
-import * as productActions from '../actions/product.actions';
 import { IFilter } from "../../shared/models/filter.model";
 import { IProduct } from "../models/product.model";
+
+import * as productActions from '../actions/product.actions';
 
 @Injectable()
 export class ProductEffects {

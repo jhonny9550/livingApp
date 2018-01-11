@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from "ionic-angular";
+import { NavController, NavParams, ModalController, AlertController } from "ionic-angular";
 import { Store } from "@ngrx/store";
 import { SelectProductPage } from "../../../product/pages/select-product/select-product.page";
 
@@ -22,6 +22,7 @@ export class AddOrderPage {
     private navCtrl: NavController,
     private navParams: NavParams,
     private modalCtrl: ModalController,
+    private alertCtrl: AlertController,
     private store: Store<any>
   ) { }
 
@@ -65,6 +66,24 @@ export class AddOrderPage {
       total_amount: this.getTotalAmount()
     };
     this.store.dispatch(new orderActions.CreateOrder(newOrder));
+  }
+
+  removeProduct(index: number) {
+    this.alertCtrl.create({
+      title: 'Eliminar',
+      message: 'Quitar producto de la orden',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          role: 'cancel',
+          handler: () => { this.products.splice(index, 1) }
+        }
+      ]
+    }).present();
   }
 
 }

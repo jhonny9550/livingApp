@@ -4,10 +4,12 @@ import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
 
-import * as tableActions from '../actions/table.actions';
-import { IFilter } from "../../shared/models/filter.model";
 import { TableProvider } from "../providers/table.provider";
+
+import { IFilter } from "../../shared/models/filter.model";
 import { ITable } from "../models/table.model";
+
+import * as tableActions from '../actions/table.actions';
 
 @Injectable()
 export class TableEffects {

@@ -27,6 +27,15 @@ export function reducer(state: IOrderList = initialState, action: Action) {
     case orderActions.CREATE_ORDER_FAILED: {
       return { ...state, loading: false };
     };
+    case orderActions.CANCEL_ORDER: {
+      return { ...state, loading: true };
+    }; 
+    case orderActions.CANCEL_ORDER_SUCCESS: {
+      return { ...state, loading: false };
+    };
+    case orderActions.CANCEL_ORDER_FAILED: {
+      return { ...state, loading: false };
+    };
     default:
       return state;
   }

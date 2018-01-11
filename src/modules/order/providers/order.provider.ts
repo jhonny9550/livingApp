@@ -33,6 +33,13 @@ export class OrderProvider {
       .then(() => newOrder);
   }
 
+  changeOrderStatus(orderRef: any, status: string) {
+    return this.afStore.firestore.runTransaction(transaction => {
+      transaction.update(orderRef, { status });
+      return Promise.resolve();
+    });
+  }
+
   getOrderRef(id: string) {
     return this.afStore.doc(`/orders/${id}`).ref;
   }

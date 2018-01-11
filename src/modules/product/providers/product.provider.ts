@@ -17,7 +17,7 @@ export class ProductProvider {
       .map((data: IProduct[]) => { if (data) return data; else throw 'Error consultando datos' });
   }
 
-  getProduct(ref): Observable<IProduct> {
+  getProductByRef(ref): Observable<IProduct> {
     return fromDocRef(ref)
       .map(snap => snap.payload.data())  
       .map((data: IProduct) => { if (data) return data; else throw 'Error consultando datos' });
