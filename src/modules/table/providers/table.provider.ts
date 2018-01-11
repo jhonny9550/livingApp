@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFirestore } from 'angularfire2/firestore';
 import { IFilter } from "../../shared/models/filter.model";
 import { ITable } from "../models/table.model";
 
@@ -7,13 +7,28 @@ import { ITable } from "../models/table.model";
 export class TableProvider {
 
   constructor(
-    private afDatabase: AngularFireDatabase
+    private afStore: AngularFirestore
   ) { }
 
   getTables(filter?: IFilter) {
-    return this.afDatabase.list(`/tables`, ref => filter ? ref.orderByChild(filter.field).startAt(filter.value) : ref)
+    return this.afStore.collection(`/tables`, ref => filter ? ref.orderBy(filter.field).startAt(filter.value).endAt(filter.value + '\uf8ff') : ref)
       .valueChanges()
       .map((data: ITable[]) => { if (data) return data; else throw 'Error consultando datos' });
+  }
+
+  getTableRef(id: string) {
+    return this.afStore.doc(`/tables/${id}`).ref;
+  }
+
+  addOrder(table: any, order: any) {
+    return this.afStore.firestore.runTransaction(transaction => {
+      return transaction.get(table).then(tableDoc => {
+        let currentOrders: Array<any> = tableDoc.data().orders;
+        currentOrders.push(order);
+        transaction.update(table, { orders: currentOrders });
+        return currentOrders;
+      });
+    });
   }
 
 }

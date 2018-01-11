@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFirestore } from 'angularfire2/firestore';
 import { Observable } from "rxjs/Rx";
 
 @Injectable()
@@ -10,8 +10,8 @@ export class AuthProvider {
 
   constructor(
     private afAuth: AngularFireAuth,
-    private afDatabase: AngularFireDatabase
-  ) { 
+    private afStore: AngularFirestore
+  ) {
     this.user$ = this.afAuth.authState;
   }
 
@@ -24,18 +24,20 @@ export class AuthProvider {
   }
 
   fetchUserData(uid: string) {
-    return this.afDatabase.object(`/users/${uid}`).query.once('value')
-      .then(snap => {
-        if (snap.val()) return snap.val();
-        else throw 'Datos de usuario no encontrados';
-      });
+    return this.afStore.doc(`/users/${uid}`)
+      .valueChanges()
+      .map(user => { if (user) return user; else throw 'Datos de usuario no encontrados' });
+  }
+
+  getUserRef(uid: string) {
+    return this.afStore.doc(`/users/${uid}`).ref;
   }
 
   parseErrorCode(error: { code: string, message: string }): string {
     switch (error.code) {
       case 'auth/wrong-password':
       case 'auth/invalid-email':
-      case 'auth/user-not-found':  
+      case 'auth/user-not-found':
         return 'Correo o contraseña inválidos';
       case 'auth/user-disabled':
         return 'Tu cuenta se encuentra desactivada, comunicate con el administrador';

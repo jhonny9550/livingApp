@@ -3,6 +3,7 @@ import { ToastController, App } from "ionic-angular";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
+import { defer } from "rxjs/observable/defer";
 import { AuthProvider } from "../providers/auth.provider";
 import { IUser } from "../models/user.model";
 
@@ -37,7 +38,6 @@ export class AuthEffects {
   @Effect()
   VerifyUser$: Observable<Action> = this.actions
     .ofType(userActions.VERIFY_USER)
-    .startWith(new userActions.VerifyUser())
     .switchMap(() => this.auth.user$)
     .take(1)
     .do(user => console.log('Local user data: ', user))
@@ -47,17 +47,15 @@ export class AuthEffects {
   getUserData$: Observable<Action> = this.actions
     .ofType(userActions.GET_USER_DATA)
     .map(toPayload)
-    .switchMap((payload: { uid: string }) => {
-      return this.auth.fetchUserData(payload.uid)
-        .then(user => new userActions.GetUserDataSuccess({ ...user }))
-        .catch(error => new userActions.GetUserDataFailed({ error }));
-    });
+    .switchMap((payload: { uid: string }) => this.auth.fetchUserData(payload.uid))
+    .map((user: IUser) => new userActions.GetUserDataSuccess({ ...user }))
+    .catch(error => Observable.of(new userActions.GetUserDataFailed({ error })));
 
   @Effect()
   getUserDataSuccess$: Observable<Action> = this.actions
     .ofType(userActions.GET_USER_DATA_SUCCESS)
     .map(toPayload)
-    .do((payload: IUser) => this.presentToast('Bienvenido ' + payload.displayName, 2000))
+    .do((payload: IUser) => this.presentToast('Bienvenido ' + payload.displayName, 2000, 'top'))
     .map((payload: IUser) => new userActions.Authenticated({ ...payload }));
 
   @Effect()
@@ -82,8 +80,7 @@ export class AuthEffects {
           console.log('Nav to cashier page');
         };
         case 'waiter': {
-          this.appCtrl.getRootNav().setRoot(WaiterTabsPage)
-            .then(() => console.log('Views: ', this.appCtrl.getRootNavs()));
+          this.appCtrl.getRootNav().setRoot(WaiterTabsPage);
         };
         default: {
           console.log('User role: ', payload.role);
@@ -103,6 +100,9 @@ export class AuthEffects {
     .map(toPayload)
     .do((payload: { error?: any, msg: string }) => this.presentToast(payload.msg))
     .map((payload: { error?: any, msg: string }) => new userActions.NotAuthenticated());
+  
+  @Effect()
+  init$: Observable<Action> = defer(() => Observable.of(new userActions.VerifyUser()));
 
   constructor(
     private actions: Actions,

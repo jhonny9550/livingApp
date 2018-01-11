@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Ver producto
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="product$ | async as product">
+    <ion-list>
+      <ion-item text-wrap>
+        <b item-left>Nombre: </b>
+        {{ product.name | titlecase }}
+      </ion-item>
+      <ion-item text-wrap>
+        <b item-left>Marca: </b>
+        {{ product.brand | titlecase }}
+      </ion-item>
+      <ion-item text-wrap>
+        <b item-left>Tipo: </b>
+        {{ product.type | titlecase }}
+      </ion-item>
+      <ion-item text-wrap>
+        <b item-left>Precio unitario: </b>
+        {{ product.price | currency:'USD':'no-symbol':'1.0-0'}}
+      </ion-item>
+      <ion-item text-wrap>
+        <b item-left>Cantidad disponible: </b>
+        {{ product.available_quantity }}
+      </ion-item>
+      <ion-item text-wrap>
+        <b item-left>Disponible para la venta: </b>
+        <ion-badge [color]="product.available ? 'secondary' : 'danger'">
+          {{ product.available ? 'Sí' : 'No' }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

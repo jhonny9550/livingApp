@@ -7,8 +7,8 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AngularFireModule } from 'angularfire2';
-import {  AngularFireDatabaseModule } from 'angularfire2/database';
-import {  AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { MyApp } from './app.component';
 import { MODULES } from "../modules/index";
@@ -23,8 +23,8 @@ import '../modules/shared/imports/rxjs-operators';
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(config.firebase),
-    AngularFireDatabaseModule,
     AngularFireAuthModule,
+    AngularFirestoreModule,
     IonicModule.forRoot(MyApp),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),

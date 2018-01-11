@@ -4,9 +4,12 @@ import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
 
-import * as tableActions from '../actions/table.actions';
-import { IFilter } from "../../shared/models/filter.model";
 import { TableProvider } from "../providers/table.provider";
+
+import { IFilter } from "../../shared/models/filter.model";
+import { ITable } from "../models/table.model";
+
+import * as tableActions from '../actions/table.actions';
 
 @Injectable()
 export class TableEffects {
@@ -16,12 +19,11 @@ export class TableEffects {
     .ofType(tableActions.GET_TABLES)
     .map(toPayload)
     .switchMap((payload?: { filter: IFilter }) => this.tableProvider.getTables(payload ? payload.filter : null))
-    .do(tables => console.log('Tables: ', tables))
-    .map(tables => new tableActions.GetTablesSuccess({ tables }))
+    .map((tables: ITable[]) => new tableActions.GetTablesSuccess({ tables }))
     .catch(err => Observable.of(new tableActions.GetTablesFailed({ err })));
 
   @Effect()
-  getTablesSuccess$: Observable<Action> = this.actions
+  getTablesFailed$: Observable<Action> = this.actions
     .ofType(tableActions.GET_TABLES_FAILED)
     .map(toPayload)
     .do((payload: { err: any }) => this.presentToast(payload.err || 'Server error'))

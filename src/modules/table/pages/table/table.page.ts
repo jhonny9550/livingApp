@@ -4,7 +4,10 @@ import { ITable } from "../../models/table.model";
 import { Observable } from "rxjs/Rx";
 import { Store } from "@ngrx/store";
 
+import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
+
 import * as fromTable from '../../reducers/table.reducer';
+import { ViewOrderPage } from "../../../order/pages/view-order/view-order.page";
 
 @Component({
   selector: 'page-table',
@@ -18,12 +21,19 @@ export class TablePage {
   constructor(
     private navCtrl: NavController,
     private navParams: NavParams,
-    private store: Store<ITable>
+    private store: Store<any>
   ) { }
 
   ngOnInit() {
-    console.log('Nav params: ', this.navParams.data);
     this.table$ = this.store.select(fromTable.getTable(this.navParams.data));
+  }
+
+  addOrder(table: ITable) {
+    this.navCtrl.push(AddOrderPage, table);
+  }
+
+  orderSelected(orderRef: any) {
+    this.navCtrl.push(ViewOrderPage, orderRef);
   }
 
 }
