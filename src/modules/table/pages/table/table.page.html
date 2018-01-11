@@ -43,8 +43,8 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="(table$ | async).orders">
-  <button ion-button block no-margin large color="secondary">
+<ion-footer *ngIf="table$ | async as table">
+  <button ion-button block no-margin large color="secondary" *ngIf="table.orders" (click)="charge(table)">
     Cobrar
   </button>
 </ion-footer>

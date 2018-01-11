@@ -4,10 +4,11 @@ export interface ITable {
   id: string;
   number: string;
   available: boolean;
+  status?: string;
   type?: string;
   capacity?: number;
   clients_served?: number;
-  orders?: string[];
+  orders?: any[];
   loading?: boolean;
   error?: any;
 };
@@ -21,4 +22,12 @@ export interface ITableList {
 
 export interface ITableModule {
   tableList: ITableList;
+};
+
+export const DEFAULT_TABLE_VALUES = {
+  STATUS: {
+    AVAILABLE: 'available',
+    BUSY: 'busy',
+    PENDING_PAYMENT: 'pending_payment'
+  }
 };
