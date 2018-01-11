@@ -35,7 +35,7 @@ export class OrderEffects {
   CreateOrder$: Observable<Action> = this.actions
     .ofType(orderActions.CREATE_ORDER)
     .map(toPayload)
-    .do((order: IOrder) => this.loader.setContent('Creando orden').present())
+    .do((order: IOrder) => this.presentLoader('Creando orden'))
     .switchMap((order: IOrder) => this.store.select(fromAuth.getUser).map(user => Object.assign({}, order, { user: this.authProvider.getUserRef(user.uid) })))
     .map((order: IOrder) => Object.assign({}, order, { table: this.tableProvider.getTableRef(order.table) }))
     .switchMap((order: IOrder) => this.orderProvider.createOrder(order))
@@ -49,7 +49,7 @@ export class OrderEffects {
   cancelOrder$: Observable<Action> = this.actions
     .ofType(orderActions.CANCEL_ORDER)
     .map(toPayload)
-    .do((payload: any) => this.loader.setContent('Cancelando orden').present())
+    .do((payload: any) => this.presentLoader('Cancelando orden'))
     .switchMap((payload: any) => this.orderProvider.changeOrderStatus(payload, 'canceled'))
     .do(() => this.loader.dismiss())
     .do(() => this.appCtrl.getActiveNav().pop())
@@ -68,7 +68,11 @@ export class OrderEffects {
     private loadingCtrl: LoadingController,
     private store: Store<any>
   ) { 
-    this.loader = this.loadingCtrl.create();
+  }
+  
+  presentLoader(content: string) {
+    this.loader = this.loadingCtrl.create({ content });
+    this.loader.present();
   }
 
   presentToast(message: string, duration: number = 4000, position: string = 'bottom', showCloseButton: boolean = true) {

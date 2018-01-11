@@ -26,7 +26,7 @@
                 {{order.products.length}} Producto{{order.products.length > 1 ? 's' : ''}}, {{order.created_at | parseDate:'hh:mm A'}}
               </p>
             </div>
-            <ion-badge item-right [color]="(orderId | orderRef | async)?.status | colorOrderStatus">{{(orderId | orderRef | async)?.status | parseOrderStatus}}</ion-badge>
+            <ion-badge item-right *ngIf="orderId | orderRef | async as order" [color]="order.status | colorOrderStatus">{{ order.status | parseOrderStatus }}</ion-badge>
           </button>
         </ion-list>
         <ng-template #orderSuggestion>

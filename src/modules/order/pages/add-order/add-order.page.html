@@ -10,7 +10,7 @@
   <h2 ion-text text-center>Mesa: {{ currentTable.number }}</h2>
   <ion-list>
     <ion-list-header>Productos</ion-list-header>
-    <button ion-item *ngFor="let product of products">
+    <button ion-item *ngFor="let product of products; index as i" (click)="removeProduct(i)">
       <b item-left>{{ product.quantity }}</b>
       <div *ngIf="product.item | parseProductRef | async as productObj">
         {{ productObj.name | titlecase }}
