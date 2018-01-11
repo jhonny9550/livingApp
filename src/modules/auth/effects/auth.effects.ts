@@ -3,6 +3,7 @@ import { ToastController, App } from "ionic-angular";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
+import { defer } from "rxjs/observable/defer";
 import { AuthProvider } from "../providers/auth.provider";
 import { IUser } from "../models/user.model";
 
@@ -37,7 +38,6 @@ export class AuthEffects {
   @Effect()
   VerifyUser$: Observable<Action> = this.actions
     .ofType(userActions.VERIFY_USER)
-    .startWith(new userActions.VerifyUser())
     .switchMap(() => this.auth.user$)
     .take(1)
     .do(user => console.log('Local user data: ', user))
@@ -100,6 +100,9 @@ export class AuthEffects {
     .map(toPayload)
     .do((payload: { error?: any, msg: string }) => this.presentToast(payload.msg))
     .map((payload: { error?: any, msg: string }) => new userActions.NotAuthenticated());
+  
+  @Effect()
+  init$: Observable<Action> = defer(() => Observable.of(new userActions.VerifyUser()));
 
   constructor(
     private actions: Actions,
