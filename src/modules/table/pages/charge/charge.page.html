@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      Detalle de cobro
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <p><b>Subtotal: </b>{{ detail.subtotal | currency:'USD':'no-symbol':'1.0-0'}}</p>
+    </ion-item>
+    <ion-item>
+      <p><b>Servicio: </b>{{ detail.service | currency:'USD':'no-symbol':'1.0-0'}}</p>
+    </ion-item>
+    <ion-item>
+      <p><b>Total: </b>{{ detail.total | currency:'USD':'no-symbol':'1.0-0'}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="table$ | async as table" text-center>
+  <h3 *ngIf="table.status === 'bill_pendent'">Mesa pendiente por factura, reclamala en caja</h3>
+  <button ion-button block no-margin large color="secondary" [disabled]="table.status === 'bill_pendent'" (click)="billRequest()">
+    Solicitar factura
+  </button>
+</ion-footer>

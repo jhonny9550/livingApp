@@ -5,6 +5,11 @@ export interface ITable {
   number: string;
   available: boolean;
   status?: string;
+  bill_detail?: {
+    subtotal: number;
+    service: number;
+    total: number;
+  };
   type?: string;
   capacity?: number;
   clients_served?: number;

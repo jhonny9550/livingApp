@@ -34,7 +34,7 @@
           <p ion-text text-center>No hay ordenes registradas. Añade una.</p>
         </ng-template>
         <ion-fab bottom right edge>
-          <button ion-fab mini color="primary" (click)="addOrder(table)">
+          <button ion-fab mini color="primary" [disabled]="table.status === 'bill_pendent'" (click)="addOrder(table)">
             <ion-icon name="add" color="light"></ion-icon>
           </button>
         </ion-fab>

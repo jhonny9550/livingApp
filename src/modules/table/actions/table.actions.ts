@@ -10,6 +10,8 @@ export const CHARGE = '[table] charge';
 export const CHARGE_SUCCESS = '[table] charge success';
 export const CHARGE_FAILED = '[table] charge failed';
 
+export const UPDATE_TABLE = '[table] update table';
+
 export class GetTables implements Action {
   readonly type = GET_TABLES;
   constructor(public payload?: { filter: IFilter }) { }
@@ -40,10 +42,16 @@ export class ChargeFailed implements Action {
   constructor(public payload: { err: any }) { }
 }
 
+export class UpdateTable implements Action {
+  readonly type = UPDATE_TABLE;
+  constructor(public payload: { tableId: string, data: any }) { }
+}
+
 export type All
   = GetTables
   | GetTablesSuccess
   | GetTablesFailed
   | Charge
   | ChargeSuccess
-  | ChargeFailed;
+  | ChargeFailed
+  | UpdateTable;

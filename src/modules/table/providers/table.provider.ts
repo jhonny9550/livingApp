@@ -31,4 +31,8 @@ export class TableProvider {
     });
   }
 
+  updateTable(tableId: string, data: any) {
+    return this.getTableRef(tableId).update(data);
+  }
+
 }

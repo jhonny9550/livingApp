@@ -19,7 +19,8 @@ export function reducer(state: ITableList = initialState, action: Action) {
     };
     case tableActions.CHARGE:
     case tableActions.CHARGE_SUCCESS:
-    case tableActions.CHARGE_FAILED: {
+    case tableActions.CHARGE_FAILED:
+    case tableActions.UPDATE_TABLE:  {
       return state;
     };
     default: {
