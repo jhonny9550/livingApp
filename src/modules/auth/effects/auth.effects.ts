@@ -111,13 +111,11 @@ export class AuthEffects {
     private appCtrl: App
   ) { }
 
-  presentToast(message: string, duration: number = 4000, position: string = 'bottom', showCloseButton: boolean = true) {
+  presentToast(message: string, duration: number = 4000, position: string = 'bottom') {
     this.toastCtrl.create({
       duration,
       message,
-      position,
-      closeButtonText: 'Ok',
-      showCloseButton
+      position
     }).present();
   }
 }

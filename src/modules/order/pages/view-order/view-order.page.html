@@ -31,8 +31,11 @@
   </div>
 </ion-content>
 
-<ion-footer>
-  <button ion-button block large no-margin color="danger" *ngIf="(order$ | async)?.status === 'cashier_pendent'" (click)="cancelOrder()">
+<ion-footer *ngIf="order$ | async as order">
+  <button ion-button [block]="order.status !== ORDER_STATE.DISPATCH_OK" large no-margin color="danger" *ngIf="order.status !== ORDER_STATE.DELIVERED && order.status !== ORDER_STATE.CANCELED" (click)="cancelOrder()" [class.half-button]="order.status === ORDER_STATE.DISPATCH_OK">
     Cancelar orden
+  </button>
+  <button ion-button large no-margin color="secondary" *ngIf="order.status === ORDER_STATE.DISPATCH_OK" class="half-button" (click)="deliverOrder()">
+    Entregar orden
   </button>
 </ion-footer>

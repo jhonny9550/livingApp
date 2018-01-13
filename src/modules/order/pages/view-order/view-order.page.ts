@@ -3,7 +3,7 @@ import { NavController, ModalController, NavParams, AlertController } from "ioni
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Rx";
 import { OrderProvider } from "../../providers/order.provider";
-import { IOrder } from "../../models/order.model";
+import { IOrder, DEFAULT_ORDER_VALUES } from "../../models/order.model";
 
 import { ViewProductPage } from "../../../product/pages/view-product/view-product.page";
 
@@ -17,6 +17,7 @@ import * as orderActions from '../../actions/order.actions';
 export class ViewOrderPage {
 
   order$: Observable<IOrder>;
+  ORDER_STATE = DEFAULT_ORDER_VALUES.STATUS;
 
   constructor(
     private navCtrl: NavController,
@@ -48,7 +49,27 @@ export class ViewOrderPage {
           text: 'Sí, cancelar',
           role: 'cancel',
           handler: () => {
-            this.store.dispatch(new orderActions.CancelOrder(this.navParams.data));
+            this.store.dispatch(new orderActions.ChangeOrderStatus(this.navParams.data));
+          }
+        }
+      ]
+    }).present();
+  }
+
+  deliverOrder() {
+    this.alertCtrl.create({
+      title: 'Importante',
+      message: 'Al entregar el pedido no se podrá cancelar la orden',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Aceptar',
+          role: 'cancel',
+          handler: () => {
+            this.store.dispatch(new orderActions.ChangeOrderStatus({ loaderMsg: 'Entregando pedido', order: this.navParams.data, removeView: true, status: this.ORDER_STATE.DELIVERED }));
           }
         }
       ]

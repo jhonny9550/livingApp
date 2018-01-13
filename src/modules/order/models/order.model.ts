@@ -28,3 +28,13 @@ export interface IOrderProduct {
   item: any;
   quantity: number;
 };
+
+export const DEFAULT_ORDER_VALUES = {
+  STATUS: {
+    DISPATCH_PENDENT: 'dispatch_pendent',
+    DISPATCH_OK: 'dispatch_ok',
+    CASHIER_PENDENT: 'cashier_pendent',
+    DELIVERED: 'delivered',
+    CANCELED: 'canceled'
+  }
+};

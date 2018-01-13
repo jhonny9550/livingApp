@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { IFilter } from "../../shared/models/filter.model";
-import { ITable } from "../models/table.model";
+import { ITable, DEFAULT_TABLE_VALUES } from "../models/table.model";
 
 @Injectable()
 export class TableProvider {
@@ -25,10 +25,14 @@ export class TableProvider {
       return transaction.get(table).then(tableDoc => {
         let currentOrders: Array<any> = tableDoc.data().orders;
         currentOrders.push(order);
-        transaction.update(table, { orders: currentOrders });
+        transaction.update(table, { orders: currentOrders, status: DEFAULT_TABLE_VALUES.STATUS.BUSY });
         return currentOrders;
       });
     });
+  }
+
+  updateTable(tableId: string, data: any) {
+    return this.getTableRef(tableId).update(data);
   }
 
 }

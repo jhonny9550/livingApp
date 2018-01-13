@@ -10,15 +10,19 @@ export function reducer(state: ITableList = initialState, action: Action) {
   switch (action.type) {
     case tableActions.GET_TABLES: {
       return { ...state, loading: true };
-    }
+    };
     case tableActions.GET_TABLES_SUCCESS: {
-      console.log('Success tables fetching: ', action.payload);
-      return { ...state, ...action.payload , loading: false };
-    }
+      return { ...state, ...action.payload, loading: false };
+    };
     case tableActions.GET_TABLES_FAILED: {
-      console.log('Failes tables fetching: ', action.payload);
       return { ...initialState, loading: false, error: action.payload.err };
-    }
+    };
+    case tableActions.CHARGE:
+    case tableActions.CHARGE_SUCCESS:
+    case tableActions.CHARGE_FAILED:
+    case tableActions.UPDATE_TABLE:  {
+      return state;
+    };
     default: {
       return state;
     }

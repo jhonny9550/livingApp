@@ -34,7 +34,7 @@
           <p ion-text text-center>No hay ordenes registradas. Añade una.</p>
         </ng-template>
         <ion-fab bottom right edge>
-          <button ion-fab mini color="primary" (click)="addOrder(table)">
+          <button ion-fab mini color="primary" [disabled]="table.status === TABLE_STATUS.BILL_PENDENT" (click)="addOrder(table)">
             <ion-icon name="add" color="light"></ion-icon>
           </button>
         </ion-fab>
@@ -43,8 +43,10 @@
   </div>
 </ion-content>
 
-<ion-footer *ngIf="(table$ | async).orders">
-  <button ion-button block no-margin large color="secondary">
-    Cobrar
-  </button>
+<ion-footer *ngIf="table$ | async as table">
+  <div class="footer-buttons" *ngIf="table.orders">
+    <button ion-button block no-margin large color="secondary" *ngIf="table.orders" (click)="charge(table)">
+      Cobrar
+    </button>
+  </div>
 </ion-footer>
