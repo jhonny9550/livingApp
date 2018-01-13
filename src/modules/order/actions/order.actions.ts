@@ -15,47 +15,47 @@ export const CHANGE_ORDER_STATUS_SUCCESS = '[order] change order status success'
 export const CHANGE_ORDER_STATUS_FAILED = '[order] change order status failed';
 
 export class GetOrders implements Action {
-  readonly type = GET_ORDERS;
+  public readonly type = GET_ORDERS;
   constructor(public payload?: { filter: IFilter }) { }
 };
 
 export class GetOrdersSuccess implements Action {
-  readonly type = GET_ORDERS_SUCCESS;
+  public readonly type = GET_ORDERS_SUCCESS;
   constructor(public payload: { orders: IOrder[] }) { }
 };
 
 export class GetOrdersFailed implements Action {
-  readonly type = GET_ORDERS_FAILED;
+  public readonly type = GET_ORDERS_FAILED;
   constructor(public payload: { err?: any }) { }
 };
 
 export class CreateOrder implements Action {
-  readonly type = CREATE_ORDER;
+  public readonly type = CREATE_ORDER;
   constructor(public payload: IOrder) { }
 }
 
 export class CreateOrderSuccess implements Action {
-  readonly type = CREATE_ORDER_SUCCESS;
+  public readonly type = CREATE_ORDER_SUCCESS;
   constructor() { }
 }
 
 export class CreateOrderFailed implements Action {
-  readonly type = CREATE_ORDER_FAILED;
+  public readonly type = CREATE_ORDER_FAILED;
   constructor(public payload: { err: any }) { }
 }
 
 export class ChangeOrderStatus implements Action {
-  readonly type = CHANGE_ORDER_STATUS;
+  public readonly type = CHANGE_ORDER_STATUS;
   constructor(public payload: { order: any, status: string, removeView: boolean, loaderMsg: string }) { }
 }
 
 export class ChangeOrderStatusSuccess implements Action {
-  readonly type = CHANGE_ORDER_STATUS_SUCCESS;
+  public readonly type = CHANGE_ORDER_STATUS_SUCCESS;
   constructor() { }
 }
 
 export class ChangeOrderStatusFailed implements Action {
-  readonly type = CHANGE_ORDER_STATUS_FAILED;
+  public readonly type = CHANGE_ORDER_STATUS_FAILED;
   constructor(public payload: { err: any }) { }
 }
 

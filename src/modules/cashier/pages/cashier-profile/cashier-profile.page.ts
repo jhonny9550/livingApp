@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from "ionic-angular";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Rx";
 
-import { IUser } from '../../../auth/models/user.model';
+import { IUser } from "../../../auth/models/user.model";
 
 import * as fromAuth from '../../../auth/reducers/auth.reducer';
 import * as userActions from '../../../auth/actions/auth.actions';
 
 @Component({
-  selector: 'page-waiter-profile',
-  templateUrl: 'waiter-profile.page.html'
+  selector: 'page-cashier-profile',
+  templateUrl: 'cashier-profile.page.html'
 })
 
-export class WaiterProfilePage {
+export class CashierProfilePage {
 
   user$: Observable<IUser>;
 
@@ -22,7 +22,7 @@ export class WaiterProfilePage {
     private alertCtrl: AlertController
   ) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.user$ = this.store.select(fromAuth.getUser);
   }
   
@@ -45,4 +45,5 @@ export class WaiterProfilePage {
       ]
     }).present();
   }
+
 }

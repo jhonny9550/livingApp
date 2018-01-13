@@ -11,6 +11,7 @@ import * as userActions from '../actions/auth.actions';
 
 import { LoginPage } from "../pages/login/login.page";
 import { WaiterTabsPage } from "../../waiter/pages/waiter-tabs/waiter-tabs.page";
+import { CashierTabsPage } from "../../cashier/pages/cashier-tabs/cashier-tabs.page";
 
 @Injectable()
 export class AuthEffects {
@@ -76,8 +77,7 @@ export class AuthEffects {
           console.log('Nav to barman page');
         };
         case 'cashier': {
-          // this.appCtrl.getActiveNav().setRoot('');
-          console.log('Nav to cashier page');
+          this.appCtrl.getActiveNav().setRoot(CashierTabsPage);
         };
         case 'waiter': {
           this.appCtrl.getRootNav().setRoot(WaiterTabsPage);

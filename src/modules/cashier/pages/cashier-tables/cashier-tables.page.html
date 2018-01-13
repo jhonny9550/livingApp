@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>
+        Mesas
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+    <div *ngIf="tableList$ | async as tableList">
+      <div text-center margin-top *ngIf="tableList.loading">
+        Cargando mesas
+        <br>
+        <ion-spinner margin-top name="crescent" color="primary"></ion-spinner>
+      </div>
+      <ion-list *ngIf="tableList.tables.length > 0; else notTables">
+        <button ion-item *ngFor="let table of tableList.tables" (click)="tableSelected(table)">
+          Mesa {{ table.number }}
+          <ion-badge color="primary" *ngIf="table.orders" item-right>{{table.orders.length}}</ion-badge>
+        </button>
+        </ion-list>
+        <ng-template #notTables>
+          <div text-center *ngIf="!tableList.loading">
+            <p ion-text>No hay mesas disponibles en este momento</p>
+          </div>
+        </ng-template>
+      </div>
+    </ion-content>
