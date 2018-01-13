@@ -11,7 +11,7 @@
     <ion-card class="table-card">
       <ion-card-header>
         <ion-card-title>
-          Total de ordenes: {{ table.orders.length || 0 }}
+          Total de ordenes: {{ table.orders ? table.orders.length : 0 }}
         </ion-card-title>
       </ion-card-header>
       <ion-card-content class="card-content">

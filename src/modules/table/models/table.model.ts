@@ -12,7 +12,6 @@ export interface ITable {
   };
   type?: string;
   capacity?: number;
-  clients_served?: number;
   orders?: any[];
   loading?: boolean;
   error?: any;
