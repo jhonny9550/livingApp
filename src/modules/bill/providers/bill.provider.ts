@@ -4,6 +4,8 @@ import { IFilter } from "../../shared/models/filter.model";
 import { IBill } from "../models/bill.model";
 import { Observable } from "rxjs/Rx";
 
+import * as firebase from 'firebase';
+
 @Injectable()
 export class BillProvider {
 
@@ -25,6 +27,14 @@ export class BillProvider {
 
   getBillRef(id: string) {
     return this.afStore.doc(`/bills/${id}`).ref;
+  }
+
+  createBill(bill: IBill) {
+    console.log('Bill to create: ', bill);
+    const billKey = this.afStore.createId();
+    const newBill = { ...bill, created_at: firebase.firestore.FieldValue.serverTimestamp(), id: billKey };
+    return this.afStore.doc(`/bills/${billKey}`).set(newBill)
+      .then(() => newBill);
   }
 
 }

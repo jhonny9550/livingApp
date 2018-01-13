@@ -7,6 +7,8 @@ import { ITable } from "../../models/table.model";
 
 import * as fromTable from '../../reducers/table.reducer';
 import * as tableActions from '../../actions/table.actions';
+import * as billActions from '../../../bill/actions/bill.actions';
+import { IBill, DEFAULT_BILL_VALUES } from "../../../bill/models/bill.model";
 
 @Component({
   selector: 'page-charge',
@@ -35,7 +37,7 @@ export class ChargePage {
     this.table$ = this.store.select(fromTable.getTable(this.detail.tableId));
   }
 
-  billRequest() {
+  billRequest(table: ITable) {
     const update_table_data = {
       status: 'bill_pendent',
       bill_detail: {
@@ -44,7 +46,14 @@ export class ChargePage {
         total: this.detail.total
       }
     };
+    const billData: IBill = {
+      detail: update_table_data.bill_detail,
+      orders: table.orders,
+      status: DEFAULT_BILL_VALUES.STATUS.PENDING,
+      table: table.id
+    }
     this.store.dispatch(new tableActions.UpdateTable({ tableId: this.detail.tableId, data: update_table_data }));
+    this.store.dispatch(new billActions.CreateBill(billData));
   }
 
 }

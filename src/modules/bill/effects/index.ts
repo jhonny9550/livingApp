@@ -1,3 +1,5 @@
-export const EFFECTS = [
+import { BillEffects } from "./bill.effects";
 
+export const EFFECTS = [
+  BillEffects
 ];

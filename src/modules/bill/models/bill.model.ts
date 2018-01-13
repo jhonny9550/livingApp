@@ -1,11 +1,11 @@
 import { IFilter } from "../../shared/models/filter.model";
 
 export interface IBill {
-  id: string;
+  id?: string;
   orders: any[];
   status: string;
   table: any;
-  user: any;
+  user?: any;
   detail: {
     service: number;
     subtotal: number;

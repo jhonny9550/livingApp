@@ -14,6 +14,8 @@ import * as fromAuth from '../../auth/reducers/auth.reducer';
 import * as fromTable from '../../table/reducers/table.reducer';
 import { AuthProvider } from "../../auth/providers/auth.provider";
 import { TableProvider } from "../../table/providers/table.provider";
+import { OrderProvider } from "../../order/providers/order.provider";
+import { DEFAULT_ORDER_VALUES } from "../../order/models/order.model";
 
 @Injectable()
 export class BillEffects {
@@ -41,8 +43,14 @@ export class BillEffects {
     .ofType(billActions.CREATE_BILL)
     .map(toPayload)
     .do(() => this.presentLoader('Creando cuenta de cobro'))
+    .switchMap((bill: IBill) => {
+      return Promise.all(bill.orders.map(orderRef => this.orderProvider.getOrderRef(orderRef.id).get().then(snap => snap.data())))
+        .then(orders => orders.filter(order => order.status === DEFAULT_ORDER_VALUES.STATUS.DELIVERED).map(order => this.orderProvider.getOrderRef(order.id)))
+        .then(deliveredOrders => Object.assign({}, bill, { orders: deliveredOrders }));
+    })
     .switchMap((bill: IBill) => this.store.select(fromAuth.getUser).map(user => Object.assign({}, bill, { user: this.authProvider.getUserRef(user.uid) })))
     .map((bill: IBill) => Object.assign({}, bill, { table: this.tableProvider.getTableRef(bill.table) }))
+    .switchMap((bill: IBill) => this.billProvider.createBill(bill))
     .map(() => new billActions.CreateBillSuccess())
     .do(() => this.loader.dismiss())
     .catch(err => Observable.of(new billActions.CreateBillFailed({ err })));
@@ -54,6 +62,7 @@ export class BillEffects {
     private billProvider: BillProvider,
     private authProvider: AuthProvider,
     private tableProvider: TableProvider,
+    private orderProvider: OrderProvider,
     private loadingCtrl: LoadingController,
     private appCtrl: App,
     private store: Store<any>

@@ -62,7 +62,7 @@ export class TableEffects {
   updateTable$: Observable<Action> = this.actions
     .ofType(tableActions.UPDATE_TABLE)
     .map(toPayload)
-    .do((payload) => this.presentLoader('Procesando'))
+    .do((payload) => this.presentLoader('Actualizando mesa'))
     .switchMap((payload: { tableId: string, data: any }) => this.tableProvider.updateTable(payload.tableId, payload.data))
     .do(() => this.loader.dismiss())
     .switchMap(() => []);
