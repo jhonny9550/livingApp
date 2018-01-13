@@ -9,18 +9,21 @@ export const initialState: IBillList = { bills: [] };
 
 export function reducer(state: IBillList = initialState, action: Action) {
   switch (action.type) {
-    case billActions.GET_BILLS: {
+    case billActions.GET_BILLS:
+    case billActions.CREATE_BILL: {
       return { ...state, loading: true };
     };
     case billActions.GET_BILLS_SUCCESS: {
       return { ...state, loading: false, bills: action.payload };
     };
+    case billActions.CREATE_BILL_SUCCESS:  
+    case billActions.CREATE_BILL_FAILED:  
     case billActions.GET_BILLS_FAILED: {
       return { ...state, loading: false };
-    }  
+    }; 
     default: {
       return state;
-    }
+    };
   }
 };
 
