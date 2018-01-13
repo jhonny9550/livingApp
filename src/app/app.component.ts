@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { LoginPage } from "../modules/auth/pages/login/login.page";
 
 @Component({
   templateUrl: 'app.html'

@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, ModalController } from "ionic-angular";
-import { ITable } from "../../models/table.model";
+import { ITable, DEFAULT_TABLE_VALUES } from "../../models/table.model";
 import { Observable } from "rxjs/Rx";
 import { Store } from "@ngrx/store";
+
+import { ChargePage } from "../charge/charge.page";
 
 import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
 import { ViewOrderPage } from "../../../order/pages/view-order/view-order.page";
 
 import * as fromTable from '../../reducers/table.reducer';
 import * as tableActions from '../../actions/table.actions';
-import { ChargePage } from "../charge/charge.page";
 
 @Component({
   selector: 'page-table',
@@ -19,6 +20,7 @@ import { ChargePage } from "../charge/charge.page";
 export class TablePage {
 
   table$: Observable<ITable>;
+  TABLE_STATUS = DEFAULT_TABLE_VALUES.STATUS;
 
   constructor(
     private navCtrl: NavController,

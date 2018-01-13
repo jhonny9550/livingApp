@@ -46,15 +46,14 @@ export class OrderEffects {
     .catch(err => Observable.of(new orderActions.CreateOrderFailed({ err })));
   
   @Effect()
-  cancelOrder$: Observable<Action> = this.actions
-    .ofType(orderActions.CANCEL_ORDER)
+  changeOrderStatus$: Observable<Action> = this.actions
+    .ofType(orderActions.CHANGE_ORDER_STATUS)
     .map(toPayload)
-    .do((payload: any) => this.presentLoader('Cancelando orden'))
-    .switchMap((payload: any) => this.orderProvider.changeOrderStatus(payload, 'canceled'))
+    .do((payload: { order: any, status: string, removeView: boolean, loaderMsg: string }) => this.presentLoader(payload.loaderMsg))
+    .switchMap((payload: { order: any, status: string, removeView: boolean, loaderMsg: string }) => this.orderProvider.changeOrderStatus(payload.order, payload.status).then(() => payload.removeView ? this.appCtrl.getActiveNav().pop() : null))
     .do(() => this.loader.dismiss())
-    .do(() => this.appCtrl.getActiveNav().pop())
-    .map(() => new orderActions.CancelOrderSuccess())
-    .catch(err => Observable.of(new orderActions.CancelOrderFailed({ err })));
+    .map(() => new orderActions.ChangeOrderStatusSuccess())
+    .catch(err => Observable.of(new orderActions.ChangeOrderStatusFailed({ err })));
   
   loader: Loading;
 

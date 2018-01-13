@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ToastController, LoadingController, Loading, ModalController } from "ionic-angular";
+import { ToastController, LoadingController, Loading, ModalController, AlertController } from "ionic-angular";
 import { Action } from "@ngrx/store";
 import { Actions, Effect, toPayload } from "@ngrx/effects";
 import { Observable } from "rxjs/Observable";
@@ -8,11 +8,12 @@ import { TableProvider } from "../providers/table.provider";
 
 import { IFilter } from "../../shared/models/filter.model";
 import { ITable } from "../models/table.model";
-import { IOrder } from '../../order/models/order.model';
+import { IOrder, DEFAULT_ORDER_VALUES } from '../../order/models/order.model';
+
+import { ChargePage } from "../pages/charge/charge.page";
 
 import * as tableActions from '../actions/table.actions';
 import { OrderProvider } from "../../order/providers/order.provider";
-import { ChargePage } from "../pages/charge/charge.page";
 
 @Injectable()
 export class TableEffects {
@@ -37,10 +38,26 @@ export class TableEffects {
     .ofType(tableActions.CHARGE)
     .map(toPayload)
     .do(payload => this.presentLoader('Generando cobro'))
-    .switchMap((payload: { table: ITable, service: boolean }) => Promise.all(payload.table.orders.map(orderRef => orderRef.get().then(snap => snap.data()))).then(res => res.filter((order: IOrder) => order.status === 'delivered').reduce((total, next) => (total + next.total_amount), 0)).then(res => this.presentChargeModal(payload.service, res, payload.table.id)))
+    .switchMap((payload: { table: ITable, service: boolean }) => Promise.all(payload.table.orders.map(orderRef => orderRef.get().then(snap => snap.data())))
+      .then(res => {
+        let total = res.filter((order: IOrder) => order.status === DEFAULT_ORDER_VALUES.STATUS.DELIVERED).reduce((total, next) => (total + next.total_amount), 0);
+        if (total === 0) {
+          return this.presentAlert('No se puede realizar el cobro porque ninguna orden ha sido entregada', 'Alerta');
+        }
+        if (res.filter((order: IOrder) => (order.status !== DEFAULT_ORDER_VALUES.STATUS.CANCELED || DEFAULT_ORDER_VALUES.STATUS.DELIVERED)).length > 0) {
+          this.presentAlert('Se cancelarán las ordenes que no se han entregado para realizar el cobro', 'Importante', null, () => {
+            return Promise.all(res.filter((order: IOrder) => order.status !== DEFAULT_ORDER_VALUES.STATUS.DELIVERED).map((order: IOrder) => this.orderProvider.getOrderRef(order.id).update({ status: DEFAULT_ORDER_VALUES.STATUS.CANCELED })))
+              .then(() => this.presentChargeModal(payload.service, total, payload.table.id))
+          }, null);
+        } else {
+          this.presentChargeModal(payload.service, total, payload.table.id);
+        }
+      })
+      .catch(err => console.log('Error: ', err)))
     .do(() => this.loader.dismiss())
-    .switchMap(() => []);
-  
+    .switchMap(() => [])
+    .catch(err => Observable.of('Obs err'));
+
   @Effect()
   updateTable$: Observable<Action> = this.actions
     .ofType(tableActions.UPDATE_TABLE)
@@ -58,7 +75,8 @@ export class TableEffects {
     private orderProvider: OrderProvider,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
   ) { }
 
   presentLoader(content: string) {
@@ -84,6 +102,26 @@ export class TableEffects {
       tableId
     };
     this.modalCtrl.create(ChargePage, chargeDetail).present().then(() => console.log('Modal opened'));
+  }
+
+  presentAlert(message: string, title: string, subTitle?: string, aceptFn?: any, cancelFn?: any) {
+    this.alertCtrl.create({
+      title,
+      message,
+      subTitle,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: cancelFn
+        },
+        {
+          text: 'Aceptar',
+          role: 'cancel',
+          handler: aceptFn
+        }
+      ]
+    }).present();
   }
 
 }

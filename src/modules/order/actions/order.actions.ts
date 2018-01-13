@@ -10,9 +10,9 @@ export const CREATE_ORDER = '[order] create order';
 export const CREATE_ORDER_SUCCESS = '[order] create order success';
 export const CREATE_ORDER_FAILED = '[order] create order failed';
 
-export const CANCEL_ORDER = '[order] cancel order';
-export const CANCEL_ORDER_SUCCESS = '[order] cancel order success';
-export const CANCEL_ORDER_FAILED = '[order] cancel order failed';
+export const CHANGE_ORDER_STATUS = '[order] change order status';
+export const CHANGE_ORDER_STATUS_SUCCESS = '[order] change order status success';
+export const CHANGE_ORDER_STATUS_FAILED = '[order] change order status failed';
 
 export class GetOrders implements Action {
   readonly type = GET_ORDERS;
@@ -44,18 +44,18 @@ export class CreateOrderFailed implements Action {
   constructor(public payload: { err: any }) { }
 }
 
-export class CancelOrder implements Action {
-  readonly type = CANCEL_ORDER;
-  constructor(public payload: any) { }
+export class ChangeOrderStatus implements Action {
+  readonly type = CHANGE_ORDER_STATUS;
+  constructor(public payload: { order: any, status: string, removeView: boolean, loaderMsg: string }) { }
 }
 
-export class CancelOrderSuccess implements Action {
-  readonly type = CANCEL_ORDER_SUCCESS;
+export class ChangeOrderStatusSuccess implements Action {
+  readonly type = CHANGE_ORDER_STATUS_SUCCESS;
   constructor() { }
 }
 
-export class CancelOrderFailed implements Action {
-  readonly type = CANCEL_ORDER_FAILED;
+export class ChangeOrderStatusFailed implements Action {
+  readonly type = CHANGE_ORDER_STATUS_FAILED;
   constructor(public payload: { err: any }) { }
 }
 
@@ -66,6 +66,6 @@ export type All
   | CreateOrder
   | CreateOrderSuccess
   | CreateOrderFailed
-  | CancelOrder
-  | CancelOrderSuccess
-  | CancelOrderFailed;
+  | ChangeOrderStatus
+  | ChangeOrderStatusSuccess
+  | ChangeOrderStatusFailed;

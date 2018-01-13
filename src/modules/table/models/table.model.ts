@@ -33,6 +33,6 @@ export const DEFAULT_TABLE_VALUES = {
   STATUS: {
     AVAILABLE: 'available',
     BUSY: 'busy',
-    PENDING_PAYMENT: 'pending_payment'
+    BILL_PENDENT: 'bill_pendent'
   }
 };
