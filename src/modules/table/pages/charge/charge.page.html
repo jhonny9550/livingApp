@@ -27,7 +27,7 @@
 
 <ion-footer *ngIf="table$ | async as table" text-center>
   <h3 *ngIf="table.status === 'bill_pendent'">Mesa pendiente por factura, reclamala en caja</h3>
-  <button ion-button block no-margin large color="secondary" [disabled]="table.status === 'bill_pendent'" (click)="billRequest()">
+  <button ion-button block no-margin large color="secondary" [disabled]="table.status === 'bill_pendent'" (click)="billRequest(table)">
     Solicitar factura
   </button>
 </ion-footer>
