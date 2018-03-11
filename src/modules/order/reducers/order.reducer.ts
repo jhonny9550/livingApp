@@ -9,31 +9,21 @@ export const initialState: IOrderList = { orders: [] };
 
 export function reducer(state: IOrderList = initialState, action: Action) {
   switch (action.type) {
-    case orderActions.GET_ORDERS: {
-      return { ...state, loading: true };
-    };
     case orderActions.GET_ORDERS_SUCCESS: {
       return { ...state, ...action.payload, loading: false };
     };
     case orderActions.GET_ORDERS_FAILED: {
       return initialState;
     };
+    case orderActions.GET_ORDERS:
+    case orderActions.CANCEL_ORDER:
     case orderActions.CREATE_ORDER: {
       return { ...state, loading: true };
     };
-    case orderActions.CREATE_ORDER_SUCCESS: {
-      return { ...state, loading: false };
-    };
-    case orderActions.CREATE_ORDER_FAILED: {
-      return { ...state, loading: false };
-    };
-    case orderActions.CANCEL_ORDER: {
-      return { ...state, loading: true };
-    }; 
+    case orderActions.CREATE_ORDER_SUCCESS:
+    case orderActions.CREATE_ORDER_FAILED:
+    case orderActions.CANCEL_ORDER_FAILED:
     case orderActions.CANCEL_ORDER_SUCCESS: {
-      return { ...state, loading: false };
-    };
-    case orderActions.CANCEL_ORDER_FAILED: {
       return { ...state, loading: false };
     };
     default:

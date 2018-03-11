@@ -14,6 +14,10 @@ export const CHANGE_ORDER_STATUS = '[order] change order status';
 export const CHANGE_ORDER_STATUS_SUCCESS = '[order] change order status success';
 export const CHANGE_ORDER_STATUS_FAILED = '[order] change order status failed';
 
+export const CANCEL_ORDER = '[order] cancel order'
+export const CANCEL_ORDER_SUCCESS = '[order] cancel order success'
+export const CANCEL_ORDER_FAILED = '[order] cancel order failed'
+
 export class GetOrders implements Action {
   public readonly type = GET_ORDERS;
   constructor(public payload?: { filter: IFilter }) { }
@@ -59,6 +63,21 @@ export class ChangeOrderStatusFailed implements Action {
   constructor(public payload: { err: any }) { }
 }
 
+export class CancelOrder implements Action {
+  public readonly type = CANCEL_ORDER;
+  constructor(public payload: string) { }
+}
+
+export class CancelOrderSuccess implements Action {
+  public readonly type = CANCEL_ORDER_SUCCESS;
+  constructor() { }
+}
+
+export class CancelOrderFailed implements Action {
+  public readonly type = CANCEL_ORDER_FAILED;
+  constructor() { }
+}
+
 export type All
   = GetOrders
   | GetOrdersSuccess
@@ -68,4 +87,7 @@ export type All
   | CreateOrderFailed
   | ChangeOrderStatus
   | ChangeOrderStatusSuccess
-  | ChangeOrderStatusFailed;
+  | ChangeOrderStatusFailed
+  | CancelOrder
+  | CancelOrderFailed
+  | CancelOrderSuccess;

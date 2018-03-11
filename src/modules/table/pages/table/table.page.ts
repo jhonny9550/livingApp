@@ -8,7 +8,9 @@ import { ChargePage } from "../charge/charge.page";
 
 import { AddOrderPage } from "../../../order/pages/add-order/add-order.page";
 import { ViewOrderPage } from "../../../order/pages/view-order/view-order.page";
+import { IUser } from '../../../auth/models/user.model';
 
+import * as fromUser from '../../../auth/reducers/auth.reducer';
 import * as fromTable from '../../reducers/table.reducer';
 import * as tableActions from '../../actions/table.actions';
 
@@ -20,6 +22,7 @@ import * as tableActions from '../../actions/table.actions';
 export class TablePage {
 
   table$: Observable<ITable>;
+  user$: Observable<IUser>;
   TABLE_STATUS = DEFAULT_TABLE_VALUES.STATUS;
 
   constructor(
@@ -32,6 +35,7 @@ export class TablePage {
 
   ngOnInit() {
     this.table$ = this.store.select(fromTable.getTable(this.navParams.data));
+    this.user$ = this.store.select(fromUser.getUser);
   }
 
   addOrder(table: ITable) {
