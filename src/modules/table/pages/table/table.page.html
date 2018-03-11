@@ -33,7 +33,7 @@
           <hr>
           <p ion-text text-center>No hay ordenes registradas. Añade una.</p>
         </ng-template>
-        <ion-fab bottom right edge>
+        <ion-fab bottom right edge *ngIf="(user$ | async)?.role === 'waiter'">
           <button ion-fab mini color="primary" [disabled]="table.status === TABLE_STATUS.BILL_PENDENT" (click)="addOrder(table)">
             <ion-icon name="add" color="light"></ion-icon>
           </button>
@@ -44,9 +44,14 @@
 </ion-content>
 
 <ion-footer *ngIf="table$ | async as table">
-  <div class="footer-buttons" *ngIf="table.orders">
-    <button ion-button block no-margin large color="secondary" *ngIf="table.orders" (click)="charge(table)">
-      Cobrar
-    </button>
-  </div>
+  <ng-container *ngIf="table.orders">
+    <div class="footer-buttons" *ngIf="user$ | async as user">
+      <button ion-button block no-margin large color="secondary" *ngIf="user.role === 'waiter'" (click)="charge(table)">
+        Cobrar
+      </button>
+      <button ion-button block no-margin large color="secondary" *ngIf="user.role === 'cashier'" (click)="charge(table)">
+        Generar cuenta de cobro
+      </button>
+    </div>
+  </ng-container>
 </ion-footer>

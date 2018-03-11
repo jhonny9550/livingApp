@@ -15,7 +15,7 @@
       </ion-item>
       <ion-item>
         <b item-left>Hora de creación: </b>
-        {{ order.created_at |  parseDate:'h:mm A' }}
+        {{ order.created_at | parseDate:'h:mm A' }}
       </ion-item>
       <ion-item>
         <b item-left>Total: </b>
@@ -32,10 +32,22 @@
 </ion-content>
 
 <ion-footer *ngIf="order$ | async as order">
-  <button ion-button [block]="order.status !== ORDER_STATE.DISPATCH_OK" large no-margin color="danger" *ngIf="order.status !== ORDER_STATE.DELIVERED && order.status !== ORDER_STATE.CANCELED" (click)="cancelOrder()" [class.half-button]="order.status === ORDER_STATE.DISPATCH_OK">
-    Cancelar orden
-  </button>
-  <button ion-button large no-margin color="secondary" *ngIf="order.status === ORDER_STATE.DISPATCH_OK" class="half-button" (click)="deliverOrder()">
-    Entregar orden
-  </button>
+  <ng-container *ngIf="user$ | async as user">
+    <ng-container *ngIf="user.role === 'waiter'">
+      <button ion-button [block]="order.status !== ORDER_STATE.DISPATCH_OK" large no-margin color="danger" *ngIf="order.status !== ORDER_STATE.DELIVERED && order.status !== ORDER_STATE.CANCELED" (click)="cancelOrder()" [class.half-button]="order.status === ORDER_STATE.DISPATCH_OK">
+        Cancelar orden
+      </button>
+      <button ion-button large no-margin color="secondary" *ngIf="order.status === ORDER_STATE.DISPATCH_OK" class="half-button" (click)="deliverOrder()">
+        Entregar orden
+      </button>
+    </ng-container>
+    <ng-container *ngIf="user.role === 'cashier'">
+      <button ion-button large no-margin color="danger" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="cancelOrder()" class="half-button">
+        Cancelar orden
+      </button>
+      <button ion-button large no-margin color="secondary" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="aproveOrder()" class="half-button">
+        Aprobar orden
+      </button>
+    </ng-container>
+  </ng-container>
 </ion-footer>

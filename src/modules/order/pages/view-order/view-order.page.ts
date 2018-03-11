@@ -4,9 +4,11 @@ import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Rx";
 import { OrderProvider } from "../../providers/order.provider";
 import { IOrder, DEFAULT_ORDER_VALUES } from "../../models/order.model";
+import { IUser } from '../../../auth/models/user.model';
 
 import { ViewProductPage } from "../../../product/pages/view-product/view-product.page";
 
+import * as fromAuth from '../../../auth/reducers/auth.reducer';
 import * as orderActions from '../../actions/order.actions';
 
 @Component({
@@ -16,6 +18,7 @@ import * as orderActions from '../../actions/order.actions';
 
 export class ViewOrderPage {
 
+  user$: Observable<IUser>;
   order$: Observable<IOrder>;
   ORDER_STATE = DEFAULT_ORDER_VALUES.STATUS;
 
@@ -28,8 +31,10 @@ export class ViewOrderPage {
     private store: Store<any>
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.order$ = this.orderProvider.getOrderByRef(this.navParams.data);
+    this.user$ = this.store.select(fromAuth.getUser);
+    console.log('Params: ', this.navParams.data)
   }
 
   productSelected(productRef: any) {
@@ -49,7 +54,7 @@ export class ViewOrderPage {
           text: 'Sí, cancelar',
           role: 'cancel',
           handler: () => {
-            this.store.dispatch(new orderActions.ChangeOrderStatus(this.navParams.data));
+            this.store.dispatch(new orderActions.ChangeOrderStatus({ loaderMsg: 'Cancelando pedido', order: this.navParams.data, removeView: true, status: this.ORDER_STATE.CANCELED }));
           }
         }
       ]
@@ -74,6 +79,10 @@ export class ViewOrderPage {
         }
       ]
     }).present();
+  }
+
+  aproveOrder() {
+    this.store.dispatch(new orderActions.ChangeOrderStatus({ loaderMsg: 'Aprobando pedido', order: this.navParams.data, removeView: true, status: this.ORDER_STATE.DISPATCH_PENDENT }));
   }
 
 }

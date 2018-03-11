@@ -18,11 +18,11 @@
         Mesa {{ table.number }}
         <ion-badge color="primary" *ngIf="table.orders" item-right>{{table.orders.length}}</ion-badge>
       </button>
-      </ion-list>
-      <ng-template #notTables>
-        <div text-center *ngIf="!tableList.loading">
-          <p ion-text>No hay mesas disponibles en este momento</p>
-        </div>
-      </ng-template>
-    </div>
-  </ion-content>
+    </ion-list>
+    <ng-template #notTables>
+      <div text-center *ngIf="!tableList.loading">
+        <p ion-text>No hay mesas disponibles en este momento</p>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>
