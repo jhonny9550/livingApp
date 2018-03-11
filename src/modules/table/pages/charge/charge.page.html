@@ -14,20 +14,32 @@
 <ion-content>
   <ion-list>
     <ion-item>
-      <p><b>Subtotal: </b>{{ detail.subtotal | currency:'USD':'no-symbol':'1.0-0'}}</p>
+      <p>
+        <b>Subtotal: </b>{{ detail.subtotal | currency:'USD':'no-symbol':'1.0-0'}}</p>
     </ion-item>
     <ion-item>
-      <p><b>Servicio: </b>{{ detail.service | currency:'USD':'no-symbol':'1.0-0'}}</p>
+      <p>
+        <b>Servicio: </b>{{ detail.service | currency:'USD':'no-symbol':'1.0-0'}}</p>
     </ion-item>
     <ion-item>
-      <p><b>Total: </b>{{ detail.total | currency:'USD':'no-symbol':'1.0-0'}}</p>
+      <p>
+        <b>Total: </b>{{ detail.total | currency:'USD':'no-symbol':'1.0-0'}}</p>
     </ion-item>
   </ion-list>
 </ion-content>
 
 <ion-footer *ngIf="table$ | async as table" text-center>
-  <h3 *ngIf="table.status === 'bill_pendent'">Mesa pendiente por factura, reclamala en caja</h3>
-  <button ion-button block no-margin large color="secondary" [disabled]="table.status === 'bill_pendent'" (click)="billRequest(table)">
-    Solicitar factura
-  </button>
+  <ng-container *ngIf="user$ | async as user">
+    <ng-container *ngIf="user.role === 'waiter'">
+      <h3 *ngIf="table.status === 'bill_pendent'">Mesa pendiente por factura, reclamala en caja</h3>
+      <button ion-button block no-margin large color="secondary" [disabled]="table.status === 'bill_pendent'" (click)="billRequest(table)">
+        Solicitar factura
+      </button>
+    </ng-container>
+    <ng-container *ngIf="user.role === 'cashier'">
+      <button ion-button block no-margin large color="secondary" [disabled]="table.status === TABLE_STATE.BILL_PENDENT" (click)="billRequest(table)">
+        Generar cuenta
+      </button>
+    </ng-container>
+  </ng-container>
 </ion-footer>

@@ -3,12 +3,14 @@ import { ViewController, NavParams } from "ionic-angular";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Rx";
 
-import { ITable } from "../../models/table.model";
+import { IBill, DEFAULT_BILL_VALUES } from "../../../bill/models/bill.model";
+import { ITable, DEFAULT_TABLE_VALUES } from "../../models/table.model";
+import { IUser } from '../../../auth/models/user.model';
 
+import * as fromAuth from '../../../auth/reducers/auth.reducer';
 import * as fromTable from '../../reducers/table.reducer';
 import * as tableActions from '../../actions/table.actions';
 import * as billActions from '../../../bill/actions/bill.actions';
-import { IBill, DEFAULT_BILL_VALUES } from "../../../bill/models/bill.model";
 
 @Component({
   selector: 'page-charge',
@@ -24,6 +26,9 @@ export class ChargePage {
     tableId: string;
   };
 
+  TABLE_STATE = DEFAULT_TABLE_VALUES.STATUS;
+
+  user$: Observable<IUser>;
   table$: Observable<ITable>;
 
   constructor(
@@ -35,6 +40,7 @@ export class ChargePage {
   ngOnInit() {
     this.detail = this.navParams.data;
     this.table$ = this.store.select(fromTable.getTable(this.detail.tableId));
+    this.user$ = this.store.select(fromAuth.getUser);
   }
 
   billRequest(table: ITable) {
