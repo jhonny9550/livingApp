@@ -34,19 +34,28 @@
 <ion-footer *ngIf="order$ | async as order">
   <ng-container *ngIf="user$ | async as user">
     <ng-container *ngIf="user.role === 'waiter'">
-      <button ion-button [block]="order.status !== ORDER_STATE.DISPATCH_OK" large no-margin color="danger" *ngIf="order.status !== ORDER_STATE.DELIVERED && order.status !== ORDER_STATE.CANCELED" (click)="cancelOrder()" [class.half-button]="order.status === ORDER_STATE.DISPATCH_OK">
+      <button ion-button [block]="order.status !== ORDER_STATE.DISPATCH_OK" large no-margin color="danger" *ngIf="order.status !== ORDER_STATE.DELIVERED && order.status !== ORDER_STATE.CANCELED"
+        (click)="cancelOrder()" [class.half-button]="order.status === ORDER_STATE.DISPATCH_OK">
         Cancelar orden
       </button>
-      <button ion-button large no-margin color="secondary" *ngIf="order.status === ORDER_STATE.DISPATCH_OK" class="half-button" (click)="deliverOrder()">
+      <button ion-button large no-margin color="secondary" *ngIf="order.status === ORDER_STATE.DISPATCH_OK" class="half-button"
+        (click)="deliverOrder()">
         Entregar orden
       </button>
     </ng-container>
     <ng-container *ngIf="user.role === 'cashier'">
-      <button ion-button large no-margin color="danger" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="cancelOrder()" class="half-button">
+      <button ion-button large no-margin color="danger" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="cancelOrder()"
+        class="half-button">
         Cancelar orden
       </button>
-      <button ion-button large no-margin color="secondary" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="aproveOrder()" class="half-button">
+      <button ion-button large no-margin color="secondary" [disabled]="order.status !== ORDER_STATE.CASHIER_PENDENT" (click)="aproveOrder()"
+        class="half-button">
         Aprobar orden
+      </button>
+    </ng-container>
+    <ng-container *ngIf="user.role === 'barman'">
+      <button ion-button large block no-margin color="secondary" [disabled]="order.status !== ORDER_STATE.DISPATCH_PENDENT" (click)="dispatchOrder()">
+        Despachar orden
       </button>
     </ng-container>
   </ng-container>

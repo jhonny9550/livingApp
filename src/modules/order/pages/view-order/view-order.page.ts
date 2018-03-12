@@ -85,4 +85,8 @@ export class ViewOrderPage {
     this.store.dispatch(new orderActions.ChangeOrderStatus({ loaderMsg: 'Aprobando pedido', order: this.navParams.data, removeView: true, status: this.ORDER_STATE.DISPATCH_PENDENT }));
   }
 
+  dispatchOrder() {
+    this.store.dispatch(new orderActions.ChangeOrderStatus({ loaderMsg: 'Despachando pedido', order: this.navParams.data, removeView: true, status: this.ORDER_STATE.DISPATCH_OK }));    
+  }
+
 }

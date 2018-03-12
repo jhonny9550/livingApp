@@ -5,6 +5,7 @@ import { ProductModule } from "./product/product.module";
 import { OrderModule } from "./order/order.module";
 import { CashierModule } from "./cashier/cashier.module";
 import { BillModule } from "./bill/bill.module";
+import { BarmanModule } from "./barman/barman.module";
 
 export const MODULES = [
   AuthModule,
@@ -13,5 +14,6 @@ export const MODULES = [
   ProductModule,
   OrderModule,
   CashierModule,
+  BarmanModule,
   BillModule
 ];
